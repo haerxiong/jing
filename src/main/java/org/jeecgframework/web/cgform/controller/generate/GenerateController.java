@@ -205,7 +205,7 @@ public class GenerateController extends BaseController {
 		try {
 			//step.2 判断表是否存在
 			boolean tableexist = new JeecgReadTable().checkTableExist(tableName);
-			if(tableexist){
+			if(tableexist || true){
 
 				String version = request.getParameter("version");
 				OnlineGenerateEnum modeEnum = OnlineGenerateEnum.toEnum(createFileProperty.getJspMode(),version);
