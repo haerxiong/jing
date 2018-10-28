@@ -16,7 +16,7 @@
     <link href="plug-in/hplus/css/style.css?v=4.1.0" rel="stylesheet">
 </head>
 
-<body class="gray-bg">
+<body class="gray-bg" style="display: none">
 <div class="row  border-bottom white-bg dashboard-header">
     <div class="col-sm-12">
         <blockquote class="text-warning" style="font-size:14px">您是否需要一款企业级J2EE快速开发平台，提高开发效率，缩短项目周期…
@@ -889,29 +889,6 @@
                             </div>
 
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>JEECG 适用范围</h5>
-                </div>
-                <div class="ibox-content">
-                    <p>为什么选择jeecg？</p>
-                    <ol>
-                        <li>采用主流框架，容易上手，学习成本低；</li>
-                        <li>强大代码生成器和在线配置能力，提高开发效率，大大缩短项目周期；</li>
-                        <li>开源免费，万人活跃社区；</li>
-                        <li>封装基础用户权限，报表等功能模块，无需再次开发；</li>
-                        <li>采用SpringMVC + Hibernate + Minidao+ Easyui+Jquery+Boostrap等基础架构</li>
-                        <li>支持多浏览器，多数据库；</li>
-                        <li>支持移动开发，可以完美兼容电脑、手机、pad等多平台；</li>
-                        <li>……</li>
-                    </ol>
-                    <hr>
-                    <div class="alert alert-warning">JEECG智能开发平台，可以应用在任何J2EE项目的开发中，尤其适合企业信息管理系统（MIS）、内部办公系统（OA）、企业资源计划系统（ERP） 、客户关系管理系统（CRM）等，其半智能手工Merge的开发方式，可以显著提高开发效率60%以上，极大降低开发成本。
                     </div>
                 </div>
             </div>

@@ -37,7 +37,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header" style="padding:0;">
                     <div class="dropdown profile-element">
-                                <span><img alt="image" width="180" height="61" src="plug-in/login/images/jeecg-aceplus.png" /></span>
+                                <span><img style="display: none" alt="image" width="180" height="61" src="plug-in/login/images/jeecg-aceplus.png" /></span>
                     </div>
                     <div class="logo-element">JEECG
                     </div>
@@ -76,19 +76,19 @@
                             </li>
                             <li><a href="javascript:openwindow('<t:mutiLang langKey="common.profile"/>','userController.do?userinfo')"><t:mutiLang langKey="common.profile"/></a></li>
                            <%--  <li><a href="javascript:openwindow('<t:mutiLang langKey="common.ssms.getSysInfos"/>','tSSmsController.do?getSysInfos')"><t:mutiLang langKey="common.ssms.getSysInfos"/></a></li> --%>
-                            <li><a href="javascript:add('<t:mutiLang langKey="common.change.style"/>','userController.do?changestyle','',550,270)"><t:mutiLang langKey="common.my.style"/></a></li>
-                            <li><a href="javascript:clearLocalstorage()"><t:mutiLang langKey="common.clear.localstorage"/></a></li>
-                            <li><a href="javascript:toSwagger()">Swagger接口</a></li>
+                            <%--<li><a href="javascript:add('<t:mutiLang langKey="common.change.style"/>','userController.do?changestyle','',550,270)"><t:mutiLang langKey="common.my.style"/></a></li>
+                            --%><li><a href="javascript:clearLocalstorage()"><t:mutiLang langKey="common.clear.localstorage"/></a></li>
+                            <%--<li><a href="javascript:toSwagger()">Swagger接口</a></li>--%>
                            <%-- <li><a href="javascript:toJeecgYun()">云应用中心</a></li>--%>
                         </ul>
                     </li>
                     
                      
-                    <li class="dropdown hidden-xs">
+                    <%--<li class="dropdown hidden-xs">
                         <a class="right-sidebar-toggle" aria-expanded="false">
                             <i class="fa fa-tasks"></i> 通知
                         </a>
-                    </li>
+                    </li>--%>
                       <li class="dropdown">
                      <a href="javascript:logout()" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
                      </li>
@@ -136,7 +136,7 @@
         </div>        
     </div>
     <!--右侧部分结束-->
-    <!--右侧边栏开始-->
+    <!--右侧边栏开始
     <div id="right-sidebar">
         <div class="sidebar-container">
 
@@ -266,7 +266,7 @@
             </div>
 
         </div>
-    </div>
+    </div>-->
 </div>
 <!-- 全局js -->
 <script src="plug-in/hplus/js/jquery.min.js?v=2.1.4"></script>
@@ -290,8 +290,8 @@
 
 <!-- 弹出TAB -->
 <script type="text/javascript" src="plug-in/hplus/hplus-tab.js"></script>
-<!-- 在线聊天 -->
-<%@include file="/context/layui.jsp"%>
+<!-- 在线聊天 --><%--
+<%@include file="/context/layui.jsp"%>--%>
 <script>
 	//初始化国际化配置
 	initI18nConfig();

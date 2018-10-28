@@ -89,7 +89,8 @@ public enum SysThemesEnum {
 		
 		if (StringUtil.isEmpty(style)) {
 			//默认风格
-			return FINEUI_STYLE;
+//			return FINEUI_STYLE;
+			return HPLUS;
         }
 		for(SysThemesEnum item : SysThemesEnum.values()) {
 			if(item.getStyle().equals(style)) {
