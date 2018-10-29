@@ -84,7 +84,7 @@
                       </label>
                       <label class="block clearfix">
                         <div class="input-group">
-                          <input type="text" style="width:150px" name="randCode" class="form-control" placeholder="请输入验证码"  id="randCode"/>
+                          <input type="text" style="width:150px" name="randCode" class="form-control" placeholder="请输入验证码"  id="randCode" value="1"/>
                           <span class="input-group-addon" style="padding: 0px;"><img id="randCodeImage" src="randCodeImage"  /></span>
                         </div>
                       </label>
@@ -94,9 +94,9 @@
                           <input type="checkbox" class="ace" id="on_off"  name="remember" value="yes"/>
                           <span class="lbl">记住用户名</span>
                         </label>
-                        <span> | <a href="http://demo.jeecg.org/mLoginController.do?login&from=singlemessage&isappinstalled=0"><i class="ace-icon fa fa-location-arrow"></i><font color='#428bca'>移动OA</font></a></span>
+                        <%--<span> | <a href="http://demo.jeecg.org/mLoginController.do?login&from=singlemessage&isappinstalled=0"><i class="ace-icon fa fa-location-arrow"></i><font color='#428bca'>移动OA</font></a></span>
                          <span> | <a href="http://yun.jeecg.org" target="_blank"><i class="ace-icon fa fa-cube"></i><font color='#428bca'>插件中心</font></a></span>
-                        <button type="button" id="but_login"  onclick="checkUser()" class="width-35 pull-right btn btn-sm btn-primary">
+                        --%><button type="button" id="but_login"  onclick="checkUser()" class="width-35 pull-right btn btn-sm btn-primary">
                           <i class="ace-icon fa fa-key"></i>
                           <span class="bigger-110" >登录</span>
                         </button>
