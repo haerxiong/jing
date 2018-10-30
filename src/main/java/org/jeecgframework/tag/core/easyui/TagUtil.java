@@ -133,7 +133,11 @@ public class TagUtil {
 				if (list.get(j) instanceof Map)
 					fieldValue = ((Map<?, ?>) list.get(j)).get(fieldName);
 				else {
-					fieldValue = fieldNametoValues(fieldName, list.get(j));
+					try {
+						fieldValue = fieldNametoValues(fieldName, list.get(j));
+					} catch (Exception e) {
+						fieldValue = "";
+					}
 				}
 				jsonTemp.append("\"" + fieldName + "\"" + ":\"" + oConvertUtils.escapeJava(fieldValue) + "\"");
 				if (i != fields.length - 1) {
