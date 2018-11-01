@@ -325,6 +325,7 @@
     	loadNotice();
     	loadSms();
 
+        $('.nav-header').next().find("a:first").click();
     });
     
     function loadNotice(){

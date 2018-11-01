@@ -47,7 +47,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Title: Controller  
  * @Description: 客户信息
  * @author onlineGenerator
- * @date 2018-10-29 14:28:24
+ * @date 2018-11-01 09:53:32
  * @version V1.0   
  *
  */
@@ -70,7 +70,14 @@ public class ZTakeinController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/jeecg/jing/zTakeinList");
+		String type = request.getParameter("type");
+		String viewName = "com/jeecg/jing/zTakeinList";
+		if("huizong".equals(type)) {
+			viewName = "com/jeecg/jing/zTakeinList_huizong";
+		}
+		ModelAndView modelAndView = new ModelAndView(viewName);
+		modelAndView.addObject("type", type);
+		return modelAndView;
 	}
 
 	/**
@@ -79,7 +86,6 @@ public class ZTakeinController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
 	 */
 
 	@RequestMapping(params = "datagrid")
@@ -89,6 +95,16 @@ public class ZTakeinController extends BaseController {
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zTakein, request.getParameterMap());
 		try{
 		//自定义追加查询条件
+			String type = request.getParameter("type");
+			if(StringUtil.isNotEmpty(type)) {
+				if("xianyou".equals(type)) {
+					cq.notEq("status", "3");
+				} else if("daoqi".equals(type)) {
+					cq.eq("status", "2");
+				} else if("huizong".equals(type)) {
+					cq.eq("status", "1");
+				}
+			}
 		
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
@@ -154,7 +170,6 @@ public class ZTakeinController extends BaseController {
 	/**
 	 * 添加客户信息
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -178,7 +193,6 @@ public class ZTakeinController extends BaseController {
 	/**
 	 * 更新客户信息
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")

@@ -85,10 +85,9 @@ public class CustomMoneyController extends BaseController {
 
 	@RequestMapping(params = "datagrid")
 	public void datagrid(CustomMoneyEntity customMoney,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-//		CriteriaQuery cq = new CriteriaQuery(CustomMoneyEntity.class, dataGrid);
 		CriteriaQuery cq = new CriteriaQuery(ZTakeinEntity.class, dataGrid);
 		//查询条件组装器
-		cq.getDetachedCriteria().createAlias("customMoneyEntity", "zt", JoinType.LEFT_OUTER_JOIN);
+		cq.getDetachedCriteria().createCriteria("customMoneyEntity", JoinType.LEFT_OUTER_JOIN);
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, customMoney, request.getParameterMap());
 		try{
 		//自定义追加查询条件
