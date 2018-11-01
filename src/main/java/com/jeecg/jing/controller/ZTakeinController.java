@@ -1,7 +1,12 @@
 package com.jeecg.jing.controller;
 import com.jeecg.jing.entity.ZTakeinEntity;
+import com.jeecg.jing.entity.ZTakeinEntity_Daoqi;
+import com.jeecg.jing.entity.ZTakeinEntity_Huizong;
+import com.jeecg.jing.entity.ZTakeinEntity_Xianyou;
 import com.jeecg.jing.service.ZTakeinServiceI;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
@@ -95,16 +101,7 @@ public class ZTakeinController extends BaseController {
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zTakein, request.getParameterMap());
 		try{
 		//自定义追加查询条件
-			String type = request.getParameter("type");
-			if(StringUtil.isNotEmpty(type)) {
-				if("xianyou".equals(type)) {
-					cq.notEq("status", "3");
-				} else if("daoqi".equals(type)) {
-					cq.eq("status", "2");
-				} else if("huizong".equals(type)) {
-					cq.eq("status", "1");
-				}
-			}
+			selfSet(request, cq);
 		
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
@@ -113,7 +110,20 @@ public class ZTakeinController extends BaseController {
 		this.zTakeinService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
+	private void selfSet(HttpServletRequest request, CriteriaQuery cq) {
+		String type = request.getParameter("type");
+		if(StringUtil.isNotEmpty(type)) {
+            if("xianyou".equals(type)) {
+                cq.notEq("status", "3");
+            } else if("daoqi".equals(type)) {
+                cq.eq("status", "2");
+            } else if("huizong".equals(type)) {
+                cq.eq("status", "1");
+            }
+        }
+	}
+
 	/**
 	 * 删除客户信息
 	 * 
@@ -264,13 +274,40 @@ public class ZTakeinController extends BaseController {
 	public String exportXls(ZTakeinEntity zTakein,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
 		CriteriaQuery cq = new CriteriaQuery(ZTakeinEntity.class, dataGrid);
+		selfSet(request, cq);
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zTakein, request.getParameterMap());
 		List<ZTakeinEntity> zTakeins = this.zTakeinService.getListByCriteriaQuery(cq,false);
+
+		List list = zTakeins;
+		Class exportType = ZTakeinEntity.class;
+		String type = request.getParameter("type");
+		if(StringUtil.isNotEmpty(type)) {// 根据不同类型导出不同Excel模板
+			list = new ArrayList();
+			if("xianyou".equals(type)) {
+				exportType = ZTakeinEntity_Xianyou.class;
+			} else if("daoqi".equals(type)) {
+				exportType = ZTakeinEntity_Daoqi.class;
+			} else if("huizong".equals(type)) {
+				exportType = ZTakeinEntity_Huizong.class;
+			}
+			Constructor constructor = exportType.getConstructors()[0];
+			for(ZTakeinEntity z : zTakeins) {
+				Object t = null;
+				try {
+					t = constructor.newInstance();
+					BeanUtils.copyProperties(z, t, exportType);
+					list.add(t);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
 		modelMap.put(NormalExcelConstants.FILE_NAME,"客户信息");
-		modelMap.put(NormalExcelConstants.CLASS,ZTakeinEntity.class);
+		modelMap.put(NormalExcelConstants.CLASS, exportType);
 		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("客户信息列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
 			"导出信息"));
-		modelMap.put(NormalExcelConstants.DATA_LIST,zTakeins);
+		modelMap.put(NormalExcelConstants.DATA_LIST, list);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
 	/**

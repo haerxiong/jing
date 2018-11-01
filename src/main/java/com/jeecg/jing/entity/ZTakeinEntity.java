@@ -45,7 +45,6 @@ public class ZTakeinEntity implements java.io.Serializable {
 	/**更新日期*/
 	private java.util.Date updateDate;
 	/**是否删除*/
-	@Excel(name="是否删除",width=15)
 	private java.lang.String isDel;
 	/**合同编号*/
 	@Excel(name="合同编号",width=15)
@@ -83,13 +82,19 @@ public class ZTakeinEntity implements java.io.Serializable {
 	/**到期时间*/
 	@Excel(name="到期时间",width=15,format = "yyyy-MM-dd HH:mm:ss")
 	private java.util.Date endTime;
+	/**出金时间*/
+	@Excel(name="出金时间",width=15,format = "yyyy-MM-dd HH:mm:ss")
+	private java.util.Date outTime;
+	/**投资时间*/
+	@Excel(name="投资时间",width=15,format = "yyyy-MM-dd HH:mm:ss")
+	private java.util.Date investTime;
 	/**备注*/
 	@Excel(name="备注",width=15)
 	private java.lang.String comment;
 	/**状态*/
 	@Excel(name="状态",width=15, dicCode = "takein")
 	private java.lang.String status;
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
@@ -466,5 +471,23 @@ public class ZTakeinEntity implements java.io.Serializable {
 	 */
 	public void setStatus(java.lang.String status){
 		this.status = status;
+	}
+
+	@Column(name ="OUT_TIME",nullable=true,length=32)
+	public Date getOutTime() {
+		return outTime;
+	}
+
+	public void setOutTime(Date outTime) {
+		this.outTime = outTime;
+	}
+
+	@Column(name ="INVEST_TIME",nullable=true,length=32)
+	public Date getInvestTime() {
+		return investTime;
+	}
+
+	public void setInvestTime(Date investTime) {
+		this.investTime = investTime;
 	}
 }
