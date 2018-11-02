@@ -21,16 +21,6 @@
 		<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
-					是否删除：
-				</div>
-				<div class="col-md-9 col-sm-9 col-xs-9 bt-content">
-					<input name="isDel" type="text" class="form-control input-sm" maxlength="32"  ignore="ignore"  />
-				</div>
-			</div>
-		</div>
-		<div class="bt-item col-md-6 col-sm-6">
-			<div class="row">
-				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
 					合同编号：
 				</div>
 				<div class="col-md-9 col-sm-9 col-xs-9 bt-content">
@@ -155,16 +145,6 @@
 				</div>
 				<div class="col-md-9 col-sm-9 col-xs-9 bt-content">
 					<input name="comment" type="text" class="form-control input-sm" maxlength="256"  ignore="ignore"  />
-				</div>
-			</div>
-		</div>
-		<div class="bt-item col-md-6 col-sm-6">
-			<div class="row">
-				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
-					状态：
-				</div>
-				<div class="col-md-9 col-sm-9 col-xs-9 bt-content">
-					<input name="status" type="text" class="form-control input-sm" maxlength="32"  ignore="ignore"  />
 				</div>
 			</div>
 		</div>
