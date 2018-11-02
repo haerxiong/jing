@@ -6,16 +6,11 @@ import java.lang.String;
 import java.lang.Double;
 import java.lang.Integer;
 import java.math.BigDecimal;
+import javax.persistence.*;
 import javax.xml.soap.Text;
 import java.sql.Blob;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
@@ -62,7 +57,7 @@ public class ZTakeinEntity implements java.io.Serializable {
 	@Excel(name="身份证号",width=15)
 	private java.lang.String idCard;
 	/**入金时间*/
-	@Excel(name="入金时间",width=15,format = "yyyy-MM-dd HH:mm:ss")
+	@Excel(name="入金时间",width=15,format = "yyyy/MM/dd")
 	private java.util.Date takeinTime;
 	/**金额*/
 	@Excel(name="金额",width=15)
@@ -80,13 +75,11 @@ public class ZTakeinEntity implements java.io.Serializable {
 	@Excel(name="汇款账号",width=15)
 	private java.lang.String bankAccount;
 	/**到期时间*/
-	@Excel(name="到期时间",width=15,format = "yyyy-MM-dd HH:mm:ss")
+	@Excel(name="到期时间",width=15,format = "yyyy/MM/dd")
 	private java.util.Date endTime;
 	/**出金时间*/
-	@Excel(name="出金时间",width=15,format = "yyyy-MM-dd HH:mm:ss")
 	private java.util.Date outTime;
 	/**投资时间*/
-	@Excel(name="投资时间",width=15,format = "yyyy-MM-dd HH:mm:ss")
 	private java.util.Date investTime;
 	/**备注*/
 	@Excel(name="备注",width=15)
@@ -94,6 +87,18 @@ public class ZTakeinEntity implements java.io.Serializable {
 	/**状态*/
 	@Excel(name="状态",width=15, dicCode = "takein")
 	private java.lang.String status;
+
+	private ZSaleEntity zSaleEntity;
+
+	@OneToOne
+	@JoinColumn(name = "id", referencedColumnName = "takein_id")
+	public ZSaleEntity getzSaleEntity() {
+		return zSaleEntity;
+	}
+
+	public void setzSaleEntity(ZSaleEntity zSaleEntity) {
+		this.zSaleEntity = zSaleEntity;
+	}
 
 	/**
 	 *方法: 取得java.lang.String
