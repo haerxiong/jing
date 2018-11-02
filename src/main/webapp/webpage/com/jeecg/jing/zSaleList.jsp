@@ -5,7 +5,10 @@
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="zSaleList" checkbox="false" pagination="true" fitColumns="true" title="销售表" actionUrl="zSaleController.do?datagrid" idField="id" sortName="createDate" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="zSaleEntity.id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="销售主键"  field="zSalemanEntity.id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="团队"  field="zSalemanEntity.teamName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="销售姓名"  field="saleName"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="入职时间"  field="zSalemanEntity.joinTime"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="签单时间"  field="zSaleEntity.signTime"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="客户姓名"  field="customName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="签单金额"  field="amount"  queryMode="single"  width="120"></t:dgCol>

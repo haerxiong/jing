@@ -1,14 +1,11 @@
 package com.jeecg.jing.controller;
-import com.jeecg.jing.entity.ZTakeinEntity;
-import com.jeecg.jing.entity.ZTakeinEntity_Daoqi;
-import com.jeecg.jing.entity.ZTakeinEntity_Huizong;
-import com.jeecg.jing.entity.ZTakeinEntity_Xianyou;
+import com.jeecg.jing.entity.*;
+import com.jeecg.jing.service.ZSalemanServiceI;
 import com.jeecg.jing.service.ZTakeinServiceI;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -40,8 +37,6 @@ import org.jeecgframework.core.util.ResourceUtil;
 import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import java.util.Map;
-import java.util.HashMap;
 import org.jeecgframework.core.util.ExceptionUtil;
 
 import org.springframework.stereotype.Controller;
@@ -66,8 +61,6 @@ public class ZTakeinController extends BaseController {
 	private ZTakeinServiceI zTakeinService;
 	@Autowired
 	private SystemService systemService;
-	
-
 
 	/**
 	 * 客户信息列表 页面跳转

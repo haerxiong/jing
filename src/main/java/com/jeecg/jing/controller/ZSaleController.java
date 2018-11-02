@@ -94,6 +94,7 @@ public class ZSaleController extends BaseController {
 		//自定义追加查询条件
 			cq.notEq("status", "3");
 			cq.getDetachedCriteria().createCriteria("zSaleEntity", JoinType.LEFT_OUTER_JOIN);
+			cq.getDetachedCriteria().createCriteria("zSalemanEntity", JoinType.LEFT_OUTER_JOIN);
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}

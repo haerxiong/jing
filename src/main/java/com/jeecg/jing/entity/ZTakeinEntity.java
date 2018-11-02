@@ -90,8 +90,20 @@ public class ZTakeinEntity implements java.io.Serializable {
 
 	private ZSaleEntity zSaleEntity;
 
+	private ZSalemanEntity zSalemanEntity;
+
 	@OneToOne
-	@JoinColumn(name = "id", referencedColumnName = "takein_id")
+	@JoinColumn(name = "sale_name", referencedColumnName = "sale_name", insertable = false, updatable = false)
+	public ZSalemanEntity getzSalemanEntity() {
+		return zSalemanEntity;
+	}
+
+	public void setzSalemanEntity(ZSalemanEntity zSalemanEntity) {
+		this.zSalemanEntity = zSalemanEntity;
+	}
+
+	@OneToOne
+	@JoinColumn(name = "id", referencedColumnName = "takein_id", insertable = false, updatable = false)
 	public ZSaleEntity getzSaleEntity() {
 		return zSaleEntity;
 	}
