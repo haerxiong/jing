@@ -92,6 +92,18 @@ public class ZTakeinEntity implements java.io.Serializable {
 
 	private ZSalemanEntity zSalemanEntity;
 
+	private ZTakeinWayEntity zTakeinWayEntity;
+
+	@OneToOne
+	@JoinColumn(name = "id", referencedColumnName = "takein_id", insertable = false, updatable = false)
+	public ZTakeinWayEntity getzTakeinWayEntity() {
+		return zTakeinWayEntity;
+	}
+
+	public void setzTakeinWayEntity(ZTakeinWayEntity zTakeinWayEntity) {
+		this.zTakeinWayEntity = zTakeinWayEntity;
+	}
+
 	@OneToOne
 	@JoinColumn(name = "sale_name", referencedColumnName = "sale_name", insertable = false, updatable = false)
 	public ZSalemanEntity getzSalemanEntity() {
