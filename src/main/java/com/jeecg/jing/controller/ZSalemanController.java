@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import org.jeecgframework.core.common.controller.BaseController;
@@ -187,10 +188,24 @@ public class ZSalemanController extends BaseController {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "销售员更新成功";
-		ZSalemanEntity t = zSalemanService.get(ZSalemanEntity.class, zSaleman.getId());
 		try {
-			MyBeanUtils.copyBeanNotNull2Bean(zSaleman, t);
-			zSalemanService.saveOrUpdate(t);
+			ZSalemanEntity t = null;
+			if(!StringUtils.isEmpty(zSaleman.getId())) {
+				t = zSalemanService.get(ZSalemanEntity.class, zSaleman.getId());
+			} else if(!StringUtils.isEmpty(zSaleman.getSaleName())) {
+				List<ZSalemanEntity> s = zSalemanService.findByProperty(ZSalemanEntity.class, "saleName", zSaleman.getSaleName());
+				if(s.size() > 0) {
+					t = s.get(0);
+				}
+			}
+
+			if(t != null) {
+				MyBeanUtils.copyBeanNotNull2Bean(zSaleman, t);
+				zSalemanService.saveOrUpdate(t);
+			} else {
+				zSalemanService.save(zSaleman);
+			}
+
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -222,8 +237,12 @@ public class ZSalemanController extends BaseController {
 	 */
 	@RequestMapping(params = "goUpdate")
 	public ModelAndView goUpdate(ZSalemanEntity zSaleman, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(zSaleman.getId())) {
-			zSaleman = zSalemanService.getEntity(ZSalemanEntity.class, zSaleman.getId());
+		String saleName = zSaleman.getSaleName();
+		if (StringUtil.isNotEmpty(zSaleman.getSaleName())) {
+			List<ZSalemanEntity> s = zSalemanService.findByProperty(ZSalemanEntity.class, "saleName", saleName);
+			zSaleman = s.size() > 0 ? s.get(0) : new ZSalemanEntity();
+			zSaleman.setSaleName(saleName);
+//			zSaleman = zSalemanService.getEntity(ZSalemanEntity.class, zSaleman.getId());
 			req.setAttribute("zSaleman", zSaleman);
 		}
 		return new ModelAndView("com/jeecg/jing/zSaleman-update");

@@ -4,8 +4,9 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="zSaleList" checkbox="false" pagination="true" fitColumns="true" title="销售表" actionUrl="zSaleController.do?datagrid" idField="id" sortName="createDate" fit="true" queryMode="group">
-   <t:dgCol title="主键"  field="zSaleEntity.id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="销售主键"  field="zSalemanEntity.id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="销售主键"  field="zSaleEntity.id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="销售员主键"  field="zSalemanEntity.id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="团队"  field="zSalemanEntity.teamName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="销售姓名"  field="saleName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="入职时间"  field="zSalemanEntity.joinTime"  queryMode="single"  width="120"></t:dgCol>
@@ -17,11 +18,14 @@
    <t:dgCol title="合计"  field="zSaleEntity.total"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="业绩年化"  field="zSaleEntity.performance"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备注"  field="zSaleEntity.comment"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
-   <t:dgDelOpt title="删除" url="zSaleController.do?doDel&id={zSaleEntity.id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
+   <t:dgCol title="编辑信息" field="opt" width="400"></t:dgCol>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="zSaleController.do?goAdd" funname="add"  width="768"></t:dgToolBar>
-   --%><t:dgToolBar title="编辑" icon="icon-edit" url="zSaleController.do?goUpdate" funname="update"  width="768"></t:dgToolBar>
-   <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="zSaleController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
+   <t:dgToolBar title="编辑" icon="icon-edit" url="zSaleController.do?goUpdate" funname="update"  width="768"></t:dgToolBar>--%>
+   <t:dgFunOpt funname="goud(id)" title="销售明细"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
+   <t:dgFunOpt funname="goud2(id)" title="客户信息"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
+   <t:dgFunOpt funname="goud3(saleName)" title="销售信息"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
+   <%--<t:dgDelOpt title="删除" url="zSaleController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
+   <t:dgToolBar title="批量删除"  icon="icon-remove" url="zSaleController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
    <t:dgToolBar title="查看" icon="icon-search" url="zSaleController.do?goUpdate" funname="detail"  width="768"></t:dgToolBar>
    <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
@@ -31,9 +35,21 @@
  </div>
  <script type="text/javascript">
  $(document).ready(function(){
+
  });
- 
-   
+
+ function goud(id) {
+     createwindow('销售明细', 'zSaleController.do?goUpdate&id='+id , 768, null);
+ }
+
+ function goud2(id) {
+     createwindow('客户信息', 'zTakeinController.do?goUpdate&id='+id , 768, null);
+ }
+
+ function goud3(saleName) {
+     createwindow('销售信息', 'zSalemanController.do?goUpdate&saleName='+saleName , 768, null);
+ }
+
  
 //导入
 function ImportXls() {

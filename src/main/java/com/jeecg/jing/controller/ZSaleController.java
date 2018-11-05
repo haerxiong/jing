@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import org.jeecgframework.core.common.controller.BaseController;
@@ -192,10 +193,14 @@ public class ZSaleController extends BaseController {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "销售表更新成功";
-		ZSaleEntity t = zSaleService.get(ZSaleEntity.class, zSale.getId());
 		try {
-			MyBeanUtils.copyBeanNotNull2Bean(zSale, t);
-			zSaleService.saveOrUpdate(t);
+			if(StringUtils.isEmpty(zSale.getId())) {
+				zSaleService.save(zSale);
+			} else {
+				ZSaleEntity t = zSaleService.get(ZSaleEntity.class, zSale.getId());
+				MyBeanUtils.copyBeanNotNull2Bean(zSale, t);
+				zSaleService.saveOrUpdate(t);
+			}
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -227,8 +232,12 @@ public class ZSaleController extends BaseController {
 	 */
 	@RequestMapping(params = "goUpdate")
 	public ModelAndView goUpdate(ZSaleEntity zSale, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(zSale.getId())) {
-			zSale = zSaleService.getEntity(ZSaleEntity.class, zSale.getId());
+		String takeinId = zSale.getId();
+		if (StringUtil.isNotEmpty(takeinId)) {
+//			zSale = zSaleService.getEntity(ZSaleEntity.class, zSale.getId());
+			List<ZSaleEntity> s = zSaleService.findByProperty(ZSaleEntity.class, "takeinId", takeinId);
+			zSale = s.size() > 0 ? s.get(0) : new ZSaleEntity();
+			zSale.setTakeinId(takeinId);
 			req.setAttribute("zSale", zSale);
 		}
 		return new ModelAndView("com/jeecg/jing/zSale-update");

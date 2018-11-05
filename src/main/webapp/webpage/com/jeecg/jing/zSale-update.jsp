@@ -17,22 +17,7 @@
 	<form class="form-horizontal" role="form" id="formobj" action="zSaleController.do?doUpdate" method="POST">
 		<input type="hidden" id="btn_sub" class="btn_sub"/>
 		<input type="hidden" id="id" name="id" value="${zSale.id}"/>
-	<div class="form-group">
-		<label for="isDel" class="col-sm-3 control-label">是否删除：</label>
-		<div class="col-sm-7">
-			<div class="input-group" style="width:100%">
-				<input id="isDel" name="isDel" value='${zSale.isDel}' type="text" maxlength="32" class="form-control input-sm" placeholder="请输入是否删除"  ignore="ignore" />
-			</div>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="takeinId" class="col-sm-3 control-label">外键指向takein表：</label>
-		<div class="col-sm-7">
-			<div class="input-group" style="width:100%">
-				<input id="takeinId" name="takeinId" value='${zSale.takeinId}' type="text" maxlength="36" class="form-control input-sm" placeholder="请输入外键指向takein表"  ignore="ignore" />
-			</div>
-		</div>
-	</div>
+		<input type="hidden" id="takeinId" name="takeinId" value="${zSale.takeinId}"/>
 	<div class="form-group">
 		<label for="signTime" class="col-sm-3 control-label">签单时间：</label>
 		<div class="col-sm-7">
