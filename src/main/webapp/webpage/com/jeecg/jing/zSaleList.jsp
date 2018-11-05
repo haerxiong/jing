@@ -10,7 +10,7 @@
    <t:dgCol title="团队"  field="zSalemanEntity.teamName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="销售姓名"  field="saleName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="入职时间" formatter="yyyy-MM-dd"  field="zSalemanEntity.joinTime"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="签单时间" formatter="yyyy-MM-dd"  field="zSaleEntity.signTime"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="签单时间" formatter="yyyy-MM-dd"  field="createDate"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="客户姓名"  field="customName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="签单金额"  field="amount"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="合同期限"  field="timeLimit"  queryMode="single"  width="120"></t:dgCol>

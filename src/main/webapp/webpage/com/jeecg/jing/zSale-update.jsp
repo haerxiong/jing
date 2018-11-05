@@ -19,14 +19,6 @@
 		<input type="hidden" id="id" name="id" value="${zSale.id}"/>
 		<input type="hidden" id="takeinId" name="takeinId" value="${zSale.takeinId}"/>
 	<div class="form-group">
-		<label for="signTime" class="col-sm-3 control-label">签单时间：</label>
-		<div class="col-sm-7">
-			<div class="input-group" style="width:100%">
-				<input id="signTime" name="signTime" value='${zSale.signTime}' type="text" maxlength="32" class="form-control input-sm" placeholder="请输入签单时间"  ignore="ignore" />
-			</div>
-		</div>
-	</div>
-	<div class="form-group">
 		<label for="yearTotal" class="col-sm-3 control-label">年化合计：</label>
 		<div class="col-sm-7">
 			<div class="input-group" style="width:100%">
