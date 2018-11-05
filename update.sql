@@ -1,1 +1,1 @@
-create table z_z select * from z_takein;
+SELECT 1 from dual;
