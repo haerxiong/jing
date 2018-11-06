@@ -18,15 +18,15 @@
    <t:dgCol title="客户姓名"  field="customName"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="身份证号"  field="idCard" hidden="${(empty type || 'huizong' eq type)?false:true}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="入金时间"  field="takeinTime" formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="入金时间"  field="takeinTime2" formatter="yyyy-MM-dd" query="${'yue' eq key ? true : false}" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="金额"  field="amount"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="入金时间"  field="takeinTime2" formatter="yyyy-MM-dd" query="${'yue' eq key ? true : false}" hidden="true" queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="金额"  field="amount" hidden="${('lixi' eq key)?true:false}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="期限"  field="timeLimit" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="利率"  field="rate"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="利率"  field="rate" hidden="${('lixi' eq key)?true:false}"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="电话"  field="phone"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="汇款账号"  field="bankAccount"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="到期时间"  field="endTime" hidden="${('huizong' eq type)?true:false}" queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="到期时间"  field="endTime" formatter="yyyy-MM-dd" hidden="${('huizong' eq type)?true:false}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="出金时间"  field="endTime1" hidden="${('daoqi' eq type)?false:true}" queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="出金时间"  field="endTime1" formatter="yyyy-MM-dd" hidden="${('daoqi' eq type)?false:true}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <%--<t:dgDelOpt title="删除" url="zTakeinController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="编辑" icon="icon-edit" url="zTakeinController.do?goUpdate" funname="update"  width="800" height="500"></t:dgToolBar>
