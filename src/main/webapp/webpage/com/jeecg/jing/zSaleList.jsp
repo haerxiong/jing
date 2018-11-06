@@ -8,7 +8,7 @@
    <t:dgCol title="销售主键"  field="zSaleEntity.id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="销售员主键"  field="zSalemanEntity.id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="团队"  field="zSalemanEntity.teamName"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="销售姓名"  field="saleName"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="销售姓名"  field="saleName" query="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="入职时间" formatter="yyyy-MM-dd"  field="zSalemanEntity.joinTime"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="签单时间" formatter="yyyy-MM-dd"  field="createDate"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="客户姓名"  field="customName"  queryMode="single"  width="120"></t:dgCol>
@@ -23,7 +23,7 @@
    <t:dgToolBar title="编辑" icon="icon-edit" url="zSaleController.do?goUpdate" funname="update"  width="768"></t:dgToolBar>--%>
    <t:dgFunOpt funname="goud(id)" title="销售明细"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
    <t:dgFunOpt funname="goud2(id)" title="修改"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
-   <t:dgFunOpt funname="goud3(saleName)" title="销售信息"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
+   <t:dgFunOpt funname="goud3(saleName)" title="销售员"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
    <%--<t:dgDelOpt title="删除" url="zSaleController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="批量删除"  icon="icon-remove" url="zSaleController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
    <t:dgToolBar title="查看" icon="icon-search" url="zSaleController.do?goUpdate" funname="detail"  width="768"></t:dgToolBar>
@@ -47,7 +47,7 @@
  }
 
  function goud3(saleName) {
-     createwindow('销售信息', 'zSalemanController.do?goUpdate&saleName='+saleName , 768, null);
+     createwindow('销售员', 'zSalemanController.do?goUpdate&saleName='+saleName , 768, null);
  }
 
  

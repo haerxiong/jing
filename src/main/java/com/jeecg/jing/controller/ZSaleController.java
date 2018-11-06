@@ -89,8 +89,14 @@ public class ZSaleController extends BaseController {
 	public void datagrid(ZSaleEntity zSale,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 //		CriteriaQuery cq = new CriteriaQuery(ZSaleEntity.class, dataGrid);
 		CriteriaQuery cq = new CriteriaQuery(ZTakeinEntity.class, dataGrid);
+
+		ZTakeinEntity zTakein = new ZTakeinEntity();
+		String saleName = request.getParameter("saleName");
+		if(StringUtil.isNotEmpty(saleName)) {
+			zTakein.setSaleName(saleName);
+		}
 		//查询条件组装器
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zSale, request.getParameterMap());
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zTakein, request.getParameterMap());
 		try{
 		//自定义追加查询条件
 			cq.notEq("status", "3");

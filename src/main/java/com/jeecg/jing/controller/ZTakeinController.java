@@ -11,6 +11,10 @@ import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Subqueries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -46,12 +50,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**   
- * @Title: Controller  
+/**
+ * @Title: Controller
  * @Description: 客户信息
  * @author onlineGenerator
  * @date 2018-11-01 09:53:32
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Controller
@@ -66,7 +70,7 @@ public class ZTakeinController extends BaseController {
 
 	/**
 	 * 客户信息列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -87,7 +91,7 @@ public class ZTakeinController extends BaseController {
 
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
@@ -106,7 +110,23 @@ public class ZTakeinController extends BaseController {
 		}
 		cq.add();
 		this.zTakeinService.getDataGridReturn(cq, true);
-		TagUtil.datagrid(response, dataGrid);
+
+        Map<String, Map<String, Object>> map = new HashMap<String,Map<String,Object>>();
+        List<String> rs = systemService.findListbySql("SELECT group_concat(r separator ',') from(SELECT CONCAT_WS('_', t.sale_name,count(1)) r from (SELECT DISTINCT a.sale_name, a.custom_name from z_takein a) t GROUP BY t.sale_name) a ");
+        List<ZTakeinEntity> results = dataGrid.getResults();
+        for (ZTakeinEntity z : results) {
+            Map<String,Object> m = new HashMap<String,Object>();
+            String s = "0";
+            try {
+                s = rs.get(0).split(z.getSaleName() + "_")[1].split(",")[0];
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            m.put("count", s);
+            map.put(z.getId(), m);
+        }
+
+		TagUtil.datagrid(response, dataGrid, map);
 	}
 
 	/*
@@ -123,6 +143,8 @@ public class ZTakeinController extends BaseController {
                 cq.eq("status", "1");
             }
         }
+
+        // 月报表特殊处理
 		String key = request.getParameter("key");
 		String takeinTime = request.getParameter("takeinTime2");
 		if("yue".equals(key) && StringUtil.isNotEmpty(takeinTime)) {
@@ -144,7 +166,7 @@ public class ZTakeinController extends BaseController {
 
 	/**
 	 * 删除客户信息
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -165,10 +187,10 @@ public class ZTakeinController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 批量删除客户信息
-	 * 
+	 *
 	 * @return
 	 */
 	 @RequestMapping(params = "doBatchDel")
@@ -179,7 +201,7 @@ public class ZTakeinController extends BaseController {
 		message = "客户信息删除成功";
 		try{
 			for(String id:ids.split(",")){
-				ZTakeinEntity zTakein = systemService.getEntity(ZTakeinEntity.class, 
+				ZTakeinEntity zTakein = systemService.getEntity(ZTakeinEntity.class,
 				id
 				);
 				zTakeinService.delete(zTakein);
@@ -197,7 +219,7 @@ public class ZTakeinController extends BaseController {
 
 	/**
 	 * 添加客户信息
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -217,10 +239,10 @@ public class ZTakeinController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 更新客户信息
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -245,11 +267,11 @@ public class ZTakeinController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 
 	/**
 	 * 客户信息新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -262,7 +284,7 @@ public class ZTakeinController extends BaseController {
 	}
 	/**
 	 * 客户信息编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -273,10 +295,10 @@ public class ZTakeinController extends BaseController {
 		}
 		return new ModelAndView("com/jeecg/jing/zTakein-update");
 	}
-	
+
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -284,10 +306,10 @@ public class ZTakeinController extends BaseController {
 		req.setAttribute("controller_name","zTakeinController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
-	
+
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -333,7 +355,7 @@ public class ZTakeinController extends BaseController {
 	}
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -347,13 +369,13 @@ public class ZTakeinController extends BaseController {
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
@@ -381,6 +403,6 @@ public class ZTakeinController extends BaseController {
 		}
 		return j;
 	}
-	
-	
+
+
 }

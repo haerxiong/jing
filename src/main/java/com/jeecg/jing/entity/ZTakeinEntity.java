@@ -488,7 +488,7 @@ public class ZTakeinEntity implements java.io.Serializable {
 	 *@return: java.lang.String  状态
 	 */
 
-	@Column(name ="STATUS",nullable=true,length=32)
+	@Column(name ="STATUS",nullable=true,length=32, insertable = false)
 	public java.lang.String getStatus(){
 		return this.status;
 	}

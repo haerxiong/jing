@@ -344,7 +344,6 @@ public class NoticeController extends BaseController{
 				//全员进行授权
 				final String noticeId = noticeSerializable.toString();
 				executor.execute(new Runnable() {
-					@Override
 					public void run() {
 						List<TSUser> userList = systemService.findHql("from TSUser");
 						for (TSUser user : userList) {
@@ -424,7 +423,6 @@ public class NoticeController extends BaseController{
 				final String noticeId = tSNotice.getId();
 				executor.execute(new Runnable() {
 					
-					@Override
 					public void run() {
 						List<TSUser> userList = systemService.findHql("from TSUser");
 						for (TSUser user : userList) {

@@ -14,7 +14,7 @@
    <t:dgCol title="是否删除"  field="isDel" hidden="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="合同编号"  field="contract"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="收据编号"  field="receipt"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="销售姓名"  field="saleName"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="销售姓名"  field="saleName" query="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="客户姓名"  field="customName"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="身份证号"  field="idCard" hidden="${(empty type || 'huizong' eq type)?false:true}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="入金时间"  field="takeinTime" formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
