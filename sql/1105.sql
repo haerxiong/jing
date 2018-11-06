@@ -38,7 +38,7 @@ CREATE TABLE `z_takein` (
   `bank_account` varchar(32) DEFAULT NULL COMMENT '汇款账号',
   `end_time` datetime DEFAULT NULL COMMENT '到期时间',
   `comment` longtext COMMENT '备注',
-  `status` varchar(32) DEFAULT NULL COMMENT '状态',
+  `status` varchar(32) DEFAULT '1' COMMENT '状态',
   `out_time` datetime DEFAULT NULL COMMENT '出金时间',
   `invest_time` datetime DEFAULT NULL COMMENT '投资时间',
   PRIMARY KEY (`id`)

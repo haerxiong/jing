@@ -85,7 +85,6 @@ public class ZTakeinEntity implements java.io.Serializable {
 	@Excel(name="备注",width=15)
 	private java.lang.String comment;
 	/**状态*/
-	@Excel(name="状态",width=15, dicCode = "takein")
 	private java.lang.String status;
 
 	private ZSaleEntity zSaleEntity;

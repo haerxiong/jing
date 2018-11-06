@@ -7,7 +7,7 @@
    <t:dgCol title="主键"  field="id" hidden="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="签单日期" formatter="yyyy-MM-dd"  field="createDate"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="客户姓名"  field="customName"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="入金时间" formatter="yyyy-MM-dd"  field="takeinTime"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="入金时间" formatter="yyyy-MM-dd"  field="takeinTime" query="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="金额"  field="amount"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="到期时间" formatter="yyyy-MM-dd"  field="endTime"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="付款方式"  field="zTakeinWayEntity.payType"  queryMode="single"  width="120"></t:dgCol>

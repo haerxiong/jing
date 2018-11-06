@@ -20,7 +20,6 @@
    <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="利率"  field="rate"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="投资时间"  field="endTime1"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="状态"  field="status"  queryMode="single"  width="120" dictionary="takein"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <%--<t:dgDelOpt title="删除" url="zTakeinController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="录入" icon="icon-add" url="zTakeinController.do?goAdd" funname="add"  width="800" height="500"></t:dgToolBar>

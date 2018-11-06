@@ -26,17 +26,15 @@
    <t:dgCol title="到期时间"  field="endTime" hidden="${('huizong' eq type)?true:false}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="出金时间"  field="endTime1" hidden="${('daoqi' eq type)?false:true}" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="状态"  field="status"  queryMode="single"  width="120" dictionary="takein"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <%--<t:dgDelOpt title="删除" url="zTakeinController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
-   --%>
    <t:dgToolBar title="编辑" icon="icon-edit" url="zTakeinController.do?goUpdate" funname="update"  width="800" height="500"></t:dgToolBar>
-   <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="zTakeinController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
-   --%><t:dgToolBar title="查看" icon="icon-search" url="zTakeinController.do?goUpdate" funname="detail"  width="800" height="500"></t:dgToolBar>
+   <t:dgToolBar title="批量删除"  icon="icon-remove" url="zTakeinController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
+   <t:dgToolBar title="查看" icon="icon-search" url="zTakeinController.do?goUpdate" funname="detail"  width="800" height="500"></t:dgToolBar>--%>
    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
    <c:if test="${empty type ? true : false}">
     <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
-    <t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>
+    <t:dgToolBar title="excel模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>
     <t:dgToolBar title="录入" icon="icon-add" url="zTakeinController.do?goAdd" funname="add"  width="800" height="500"></t:dgToolBar>
    </c:if>
   </t:datagrid>

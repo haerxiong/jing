@@ -3,8 +3,8 @@ import com.jeecg.jing.entity.ZTakeinEntity;
 import com.jeecg.jing.entity.ZTakeinWayEntity;
 import com.jeecg.jing.service.ZTakeinWayServiceI;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,8 +37,6 @@ import org.jeecgframework.core.util.ResourceUtil;
 import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import java.util.Map;
-import java.util.HashMap;
 import org.jeecgframework.core.util.ExceptionUtil;
 
 import org.springframework.stereotype.Controller;
@@ -82,7 +80,6 @@ public class ZTakeinWayController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
 	 */
 
 	@RequestMapping(params = "datagrid")
@@ -93,6 +90,14 @@ public class ZTakeinWayController extends BaseController {
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zTakeinWay, request.getParameterMap());
 		try{
 		//自定义追加查询条件
+			String takeinTime = request.getParameter("takeinTime");
+			if(StringUtil.isNotEmpty(takeinTime)) {
+				SimpleDateFormat start = new SimpleDateFormat("yyyy-MM-dd");
+				Date startDate = start.parse(takeinTime);
+				Date endDate = new Date(startDate.getTime() + 24*3600*1000);
+				cq.ge("takeinTime", startDate);
+				cq.lt("takeinTime", endDate);
+			}
 			cq.notEq("status", "3");
 			cq.getDetachedCriteria().createCriteria("zTakeinWayEntity", JoinType.LEFT_OUTER_JOIN);
 		}catch (Exception e) {
