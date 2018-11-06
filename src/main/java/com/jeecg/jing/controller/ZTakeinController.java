@@ -5,6 +5,8 @@ import com.jeecg.jing.service.ZTakeinServiceI;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,12 +72,16 @@ public class ZTakeinController extends BaseController {
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
 		String type = request.getParameter("type");
+		String key = request.getParameter("key");
+
 		String viewName = "com/jeecg/jing/zTakeinList";
 		if("huizong".equals(type)) {
 			viewName = "com/jeecg/jing/zTakeinList_huizong";
 		}
+
 		ModelAndView modelAndView = new ModelAndView(viewName);
 		modelAndView.addObject("type", type);
+		modelAndView.addObject("key", key);
 		return modelAndView;
 	}
 
@@ -95,7 +101,6 @@ public class ZTakeinController extends BaseController {
 		try{
 		//自定义追加查询条件
 			selfSet(request, cq);
-		
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
@@ -104,6 +109,9 @@ public class ZTakeinController extends BaseController {
 		TagUtil.datagrid(response, dataGrid);
 	}
 
+	/*
+	* 导出excel和查询公用方法
+	**/
 	private void selfSet(HttpServletRequest request, CriteriaQuery cq) {
 		String type = request.getParameter("type");
 		if(StringUtil.isNotEmpty(type)) {
@@ -115,6 +123,23 @@ public class ZTakeinController extends BaseController {
                 cq.eq("status", "1");
             }
         }
+		String key = request.getParameter("key");
+		String takeinTime = request.getParameter("takeinTime2");
+		if("yue".equals(key) && StringUtil.isNotEmpty(takeinTime)) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				Date parse = format.parse(takeinTime);
+				Calendar curMon = Calendar.getInstance();
+				curMon.setTime(parse);
+				curMon.set(Calendar.DAY_OF_MONTH, 1);
+				Calendar nextMon = (Calendar) curMon.clone();
+				nextMon.add(Calendar.MONTH, 1);
+				cq.ge("takeinTime", curMon.getTime());
+				cq.lt("takeinTime", nextMon.getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**

@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="zTakeinList" checkbox="false" pagination="true" fitColumns="true" title="客户信息" actionUrl="zTakeinController.do?datagrid&type=${type}" idField="id" sortName="createDate" fit="true" queryMode="group">
+  <t:datagrid name="zTakeinList" checkbox="false" pagination="true" fitColumns="true" title="客户信息" actionUrl="zTakeinController.do?datagrid&key=${key}&type=${type}" idField="id" sortName="createDate" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -17,9 +17,10 @@
    <t:dgCol title="销售姓名"  field="saleName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="客户姓名"  field="customName"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="身份证号"  field="idCard" hidden="${(empty type || 'huizong' eq type)?false:true}" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="入金时间"  field="takeinTime"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="入金时间"  field="takeinTime" formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="入金时间"  field="takeinTime2" formatter="yyyy-MM-dd" query="${'yue' eq key ? true : false}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="金额"  field="amount"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="期限"  field="timeLimit"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="期限"  field="timeLimit" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="利率"  field="rate"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="电话"  field="phone"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="汇款账号"  field="bankAccount"  queryMode="single"  width="120"></t:dgCol>
