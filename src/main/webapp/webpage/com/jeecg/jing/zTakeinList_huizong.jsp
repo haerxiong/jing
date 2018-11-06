@@ -20,7 +20,9 @@
    <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="利率"  field="rate"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="投资时间"  field="endTime1"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
+   <t:dgCol title="操作" field="opt" width="150"></t:dgCol>
+   <t:dgFunOpt funname="goud2(id)" title="修改"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
+   <t:dgConfOpt url="zTakeinController.do?doUpdate&id={id}&status=2" title="出金" message="确定出金吗？"></t:dgConfOpt>
    <%--<t:dgDelOpt title="删除" url="zTakeinController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="录入" icon="icon-add" url="zTakeinController.do?goAdd" funname="add"  width="800" height="500"></t:dgToolBar>
    --%><t:dgToolBar title="编辑" icon="icon-edit" url="zTakeinController.do?goUpdate" funname="update"  width="800" height="500"></t:dgToolBar>
@@ -35,8 +37,10 @@
  <script type="text/javascript">
  $(document).ready(function(){
  });
- 
-   
+
+ function goud2(id) {
+     createwindow('修改', 'zTakeinController.do?goUpdate&id='+id , 768, null);
+ }
  
 //导入
 function ImportXls() {

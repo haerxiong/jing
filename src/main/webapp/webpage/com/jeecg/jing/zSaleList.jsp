@@ -22,7 +22,7 @@
    <%--<t:dgToolBar title="录入" icon="icon-add" url="zSaleController.do?goAdd" funname="add"  width="768"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="zSaleController.do?goUpdate" funname="update"  width="768"></t:dgToolBar>--%>
    <t:dgFunOpt funname="goud(id)" title="销售明细"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
-   <t:dgFunOpt funname="goud2(id)" title="客户信息"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
+   <t:dgFunOpt funname="goud2(id)" title="修改"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
    <t:dgFunOpt funname="goud3(saleName)" title="销售信息"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
    <%--<t:dgDelOpt title="删除" url="zSaleController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="批量删除"  icon="icon-remove" url="zSaleController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
@@ -43,7 +43,7 @@
  }
 
  function goud2(id) {
-     createwindow('客户信息', 'zTakeinController.do?goUpdate&id='+id , 768, null);
+     createwindow('修改', 'zTakeinController.do?goUpdate&id='+id , 768, null);
  }
 
  function goud3(saleName) {

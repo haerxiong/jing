@@ -229,6 +229,9 @@ public class ZTakeinController extends BaseController {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "客户信息更新成功";
+		if("2".equals(zTakein.getStatus())) {
+			zTakein.setOutTime(new Date());
+		}
 		ZTakeinEntity t = zTakeinService.get(ZTakeinEntity.class, zTakein.getId());
 		try {
 			MyBeanUtils.copyBeanNotNull2Bean(zTakein, t);

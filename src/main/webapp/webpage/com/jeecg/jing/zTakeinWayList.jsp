@@ -14,7 +14,7 @@
    <t:dgCol title="备注"  field="zTakeinWayEntity.comment"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="150"></t:dgCol>
    <t:dgFunOpt funname="goud(id)" title="付款方式"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
-   <t:dgFunOpt funname="goud2(id)" title="客户信息"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
+   <t:dgFunOpt funname="goud2(id)" title="修改"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
    <%--<t:dgDelOpt title="删除" url="zTakeinWayController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="录入" icon="icon-add" url="zTakeinWayController.do?goAdd" funname="add"  width="768"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="zTakeinWayController.do?goUpdate" funname="update"  width="768"></t:dgToolBar>
@@ -34,7 +34,7 @@
      createwindow('付款方式', 'zTakeinWayController.do?goUpdate&id='+id , 768, null);
  }
  function goud2(id) {
-     createwindow('客户信息', 'zTakeinController.do?goUpdate&id='+id , 768, null);
+     createwindow('修改', 'zTakeinController.do?goUpdate&id='+id , 768, null);
  }
 
 //导入
