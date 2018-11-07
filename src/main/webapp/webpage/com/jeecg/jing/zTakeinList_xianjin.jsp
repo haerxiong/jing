@@ -22,19 +22,10 @@
    <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="150"></t:dgCol>
    <t:dgFunOpt funname="goud2(id)" title="修改"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
-   <c:if test="${'daoqi' eq type}">
-    <t:dgConfOpt url="zTakeinController.do?doUpdate&id={id}&status=3" title="归档" message="确定归档吗？"></t:dgConfOpt>
-   </c:if>
    <%--<t:dgDelOpt title="删除" url="zTakeinController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="编辑" icon="icon-edit" url="zTakeinController.do?goUpdate" funname="update"  width="800" height="500"></t:dgToolBar>
    <t:dgToolBar title="批量删除"  icon="icon-remove" url="zTakeinController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
    <t:dgToolBar title="查看" icon="icon-search" url="zTakeinController.do?goUpdate" funname="detail"  width="800" height="500"></t:dgToolBar>--%>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
-   <c:if test="${'xianyou' eq type ? true : false}">
-    <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
-    <t:dgToolBar title="excel模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>
-    <t:dgToolBar title="录入" icon="icon-add" url="zTakeinController.do?goAdd" funname="add"  width="800" height="500"></t:dgToolBar>
-   </c:if>
   </t:datagrid>
   </div>
  </div>
