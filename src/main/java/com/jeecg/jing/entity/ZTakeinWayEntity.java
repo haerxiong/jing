@@ -56,7 +56,46 @@ public class ZTakeinWayEntity implements java.io.Serializable {
 	/**外键*/
 	@Excel(name="外键",width=15)
 	private java.lang.String takeinId;
-	
+	/**所属部门*/
+	private java.lang.String sysOrgCode;
+	/**所属公司*/
+	private java.lang.String sysCompanyCode;
+
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  所属部门
+	 */
+
+	@Column(name ="SYS_ORG_CODE",nullable=true,length=50)
+	public java.lang.String getSysOrgCode(){
+		return this.sysOrgCode;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  所属部门
+	 */
+	public void setSysOrgCode(java.lang.String sysOrgCode){
+		this.sysOrgCode = sysOrgCode;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  所属公司
+	 */
+
+	@Column(name ="SYS_COMPANY_CODE",nullable=true,length=50)
+	public java.lang.String getSysCompanyCode(){
+		return this.sysCompanyCode;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  所属公司
+	 */
+	public void setSysCompanyCode(java.lang.String sysCompanyCode){
+		this.sysCompanyCode = sysCompanyCode;
+	}
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键

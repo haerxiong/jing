@@ -90,3 +90,15 @@ CREATE TABLE `z_takein_way` (
   `takein_id` varchar(36) DEFAULT NULL COMMENT '外键',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table z_takein add column sys_org_code varchar(50) comment '所属部门';
+alter table z_takein add column sys_company_code varchar(50) comment '所属公司';
+
+alter table z_sale add column sys_org_code varchar(50) comment '所属部门';
+alter table z_sale add column sys_company_code varchar(50) comment '所属公司';
+
+alter table z_saleman add column sys_org_code varchar(50) comment '所属部门';
+alter table z_saleman add column sys_company_code varchar(50) comment '所属公司';
+
+alter table z_takein_way add column sys_org_code varchar(50) comment '所属部门';
+alter table z_takein_way add column sys_company_code varchar(50) comment '所属公司';
