@@ -12,22 +12,14 @@
    <t:dgCol title="更新人名称"  field="updateName"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="更新人登录名称"  field="updateBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="更新日期"  field="updateDate"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="是否删除"  field="isDel" hidden="true" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="合同编号"  field="contract"  query="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="收据编号"  field="receipt"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="销售姓名"  field="saleName" query="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="客户姓名"  field="customName"  query="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="身份证号"  field="idCard" hidden="${(empty type || 'huizong' eq type)?false:true}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="入金时间"  field="takeinTime" formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="入金时间"  field="takeinTime2" formatter="yyyy-MM-dd" query="${'yue' eq key ? true : false}" hidden="true" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="金额"  field="amount" hidden="${('lixi' eq key)?true:false}" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="期限"  field="timeLimit" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="利率"  field="rate" hidden="${('lixi' eq key)?true:false}"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="电话"  field="phone"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="汇款账号"  field="bankAccount"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="到期时间"  field="endTime" formatter="yyyy-MM-dd" hidden="${('huizong' eq type)?true:false}" queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="到期时间"  field="endTime" formatter="yyyy-MM-dd" queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="合计金额"  field="ext1"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="客户签字"  field="ext2"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="出金时间"  field="outTime" formatter="yyyy-MM-dd" hidden="${('daoqi' eq type)?false:true}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="150"></t:dgCol>
    <t:dgFunOpt funname="goud2(id)" title="修改"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
    <c:if test="${'daoqi' eq type}">

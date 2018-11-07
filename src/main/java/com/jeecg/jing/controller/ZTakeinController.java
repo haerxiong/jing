@@ -11,10 +11,7 @@ import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Property;
-import org.hibernate.criterion.Subqueries;
+import org.hibernate.criterion.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -77,15 +74,20 @@ public class ZTakeinController extends BaseController {
 	public ModelAndView list(HttpServletRequest request) {
 		String type = request.getParameter("type");
 		String key = request.getParameter("key");
+		String key2 = request.getParameter("key2");
 
 		String viewName = "com/jeecg/jing/zTakeinList";
 		if("huizong".equals(type)) {
 			viewName = "com/jeecg/jing/zTakeinList_huizong";
 		}
+		if("xianjin".equals(key2)) {
+			viewName = "com/jeecg/jing/zTakeinList_xianjin";
+		}
 
 		ModelAndView modelAndView = new ModelAndView(viewName);
 		modelAndView.addObject("type", type);
 		modelAndView.addObject("key", key);
+		modelAndView.addObject("key2", key2);
 		return modelAndView;
 	}
 
@@ -111,6 +113,7 @@ public class ZTakeinController extends BaseController {
 		cq.add();
 		this.zTakeinService.getDataGridReturn(cq, true);
 
+		// 扩展‘客户量’字段
         Map<String, Map<String, Object>> map = new HashMap<String,Map<String,Object>>();
         List<String> rs = systemService.findListbySql("SELECT group_concat(r separator ',') from(SELECT CONCAT_WS('_', t.sale_name,count(1)) r from (SELECT DISTINCT a.sale_name, a.custom_name from z_takein a) t GROUP BY t.sale_name) a ");
         List<ZTakeinEntity> results = dataGrid.getResults();
@@ -161,6 +164,12 @@ public class ZTakeinController extends BaseController {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+		}
+
+		// 现金利息处理
+		String key2 = request.getParameter("key2");
+		if("xianjin".equals(key2)) {
+			cq.or(Restrictions.like("comment", "现金"), Restrictions.like("bankAccount", "现金"));
 		}
 	}
 
