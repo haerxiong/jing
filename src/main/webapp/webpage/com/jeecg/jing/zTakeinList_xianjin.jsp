@@ -44,7 +44,7 @@ function ImportXls() {
 
 //导出
 function ExportXls() {
-	JeecgExcelExport("zTakeinController.do?exportXls&type=${type}","zTakeinList");
+	JeecgExcelExport("zTakeinController.do?exportXls&key=${key}&type=${type}&key2=${key2}","zTakeinList");
 }
 
 //模板下载

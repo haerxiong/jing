@@ -3,8 +3,11 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="zTakeinList" checkbox="false" pagination="true" fitColumns="true" title="客户信息"
+  <t:datagrid name="zTakeinList" checkbox="false" pagination="true" fitColumns="true" title="客户信息" onLoadSuccess="ok"
     actionUrl="zTakeinController.do?datagrid&key=${key}&type=${type}&key2=${key2}" idField="id" sortName="createDate" fit="true" queryMode="group">
+    <c:if test="${'yue' eq key}">
+     <t:dgCol title="<b id=\"head\"></b>" colspan="12" newColumn="true"></t:dgCol>
+    </c:if>
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -19,7 +22,7 @@
    <t:dgCol title="客户姓名"  field="customName"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="身份证号"  field="idCard" hidden="${(empty type || 'huizong' eq type)?false:true}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="入金时间"  field="takeinTime" formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="入金时间"  field="takeinTime2" formatter="yyyy-MM-dd" query="${'yue' eq key ? true : false}" hidden="true" queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="月份(如2018-01)"  field="takeinTime2"  query="${'yue' eq key ? true : false}" hidden="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="金额"  field="amount" hidden="${('lixi' eq key)?true:false}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="期限"  field="timeLimit" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="利率"  field="rate" hidden="${('lixi' eq key)?true:false}"  queryMode="single"  width="120"></t:dgCol>
@@ -48,12 +51,20 @@
  </div>
  <script type="text/javascript">
  $(document).ready(function(){
+     $("[name='takeinTime2']").prev().css('width', 120);
  });
+
+ function ok() {
+     var head = $("[name='takeinTime2']").val();
+     if(!head)
+      head = "全部";
+     $("#head").html(head+"单月流水汇总");
+ }
 
  function goud2(id) {
      createwindow('修改', 'zTakeinController.do?goUpdate&id='+id , 768, null);
  }
- 
+
 //导入
 function ImportXls() {
 	openuploadwin('Excel导入', 'zTakeinController.do?upload', "zTakeinList");
@@ -61,7 +72,7 @@ function ImportXls() {
 
 //导出
 function ExportXls() {
-	JeecgExcelExport("zTakeinController.do?exportXls&type=${type}","zTakeinList");
+	JeecgExcelExport("zTakeinController.do?exportXls&key=${key}&type=${type}&key2=${key2}","zTakeinList");
 }
 
 //模板下载

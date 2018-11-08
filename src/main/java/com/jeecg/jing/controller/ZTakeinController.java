@@ -88,6 +88,7 @@ public class ZTakeinController extends BaseController {
 		modelAndView.addObject("type", type);
 		modelAndView.addObject("key", key);
 		modelAndView.addObject("key2", key2);
+
 		return modelAndView;
 	}
 
@@ -153,10 +154,9 @@ public class ZTakeinController extends BaseController {
 		if("yue".equals(key) && StringUtil.isNotEmpty(takeinTime)) {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			try {
-				Date parse = format.parse(takeinTime);
+				Date parse = format.parse(takeinTime+"-01");
 				Calendar curMon = Calendar.getInstance();
 				curMon.setTime(parse);
-				curMon.set(Calendar.DAY_OF_MONTH, 1);
 				Calendar nextMon = (Calendar) curMon.clone();
 				nextMon.add(Calendar.MONTH, 1);
 				cq.ge("takeinTime", curMon.getTime());
@@ -331,6 +331,8 @@ public class ZTakeinController extends BaseController {
 		List<ZTakeinEntity> zTakeins = this.zTakeinService.getListByCriteriaQuery(cq,false);
 
 		List list = zTakeins;
+        String fileName = "客户信息汇总";
+        String title = fileName + "列表";
 		Class exportType = ZTakeinEntity.class;
 		String type = request.getParameter("type");
 		String key = request.getParameter("key");
@@ -338,13 +340,26 @@ public class ZTakeinController extends BaseController {
 			list = new ArrayList();
 			if("xianyou".equals(type)) {
 				exportType = ZTakeinEntity_Xianyou.class;
+                fileName = "现有资金流水";
+                title = fileName + "列表";
 				if("lixi".equals(key)) {
 					exportType = ZTakeinEntity_Lixi.class;
-				}
+                    fileName = "客户利息";
+                    title = fileName + "列表";
+				} else if("yue".equals(key)) {
+                    String takeinTime = request.getParameter("takeinTime2");
+                    fileName = takeinTime + "客户单月流水汇总";
+                    title = fileName + "列表";
+                }
+
 			} else if("daoqi".equals(type)) {
 				exportType = ZTakeinEntity_Daoqi.class;
+                fileName = "客户资金到期汇总";
+                title = fileName + "列表";
 			} else if("huizong".equals(type)) {
 				exportType = ZTakeinEntity_Huizong.class;
+                fileName = "客户资金汇总";
+                title = fileName + "列表";
 			}
 			Constructor constructor = exportType.getConstructors()[0];
 			for(ZTakeinEntity z : zTakeins) {
@@ -359,9 +374,9 @@ public class ZTakeinController extends BaseController {
 			}
 		}
 
-		modelMap.put(NormalExcelConstants.FILE_NAME,"客户信息");
+        modelMap.put(NormalExcelConstants.FILE_NAME, fileName);
 		modelMap.put(NormalExcelConstants.CLASS, exportType);
-		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("客户信息列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams(title, "导出人:"+ResourceUtil.getSessionUser().getRealName(),
 			"导出信息"));
 		modelMap.put(NormalExcelConstants.DATA_LIST, list);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
