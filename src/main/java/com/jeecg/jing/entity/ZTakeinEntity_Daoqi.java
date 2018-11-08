@@ -24,23 +24,23 @@ public class ZTakeinEntity_Daoqi implements java.io.Serializable {
 	private String saleName;
 	@Excel(name="客户姓名",width=15)
 	private String customName;
-	@Excel(name="入金时间",width=15,format = "yyyy-MM-dd")
+	@Excel(name="入金时间",width=15,format = "yyyy/MM/dd")
 	private Date takeinTime;
 	@Excel(name="金额",width=15)
 	private BigDecimal amount;
 	@Excel(name="期限",width=15)
-	private Integer timeLimit;
+	private String timeLimit;
 	@Excel(name="利率",width=15)
 	private BigDecimal rate;
 	@Excel(name="电话",width=15)
 	private String phone;
 	@Excel(name="汇款账号",width=15)
 	private String bankAccount;
-	@Excel(name="到期时间",width=15,format = "yyyy-MM-dd")
+	@Excel(name="到期时间",width=15,format = "yyyy/MM/dd")
 	private Date endTime;
 	@Excel(name="备注",width=15)
 	private String comment;
-	@Excel(name="出金时间",width=15,format = "yyyy-MM-dd")
+	@Excel(name="出金时间",width=15,format = "yyyy/MM/dd")
 	private java.util.Date outTime;
 
 	public String getContract() {
@@ -91,11 +91,11 @@ public class ZTakeinEntity_Daoqi implements java.io.Serializable {
 		this.amount = amount;
 	}
 
-	public Integer getTimeLimit() {
+	public String getTimeLimit() {
 		return timeLimit;
 	}
 
-	public void setTimeLimit(Integer timeLimit) {
+	public void setTimeLimit(String timeLimit) {
 		this.timeLimit = timeLimit;
 	}
 

@@ -36,6 +36,7 @@
    <c:if test="${'daoqi' eq type}">
     <t:dgConfOpt url="zTakeinController.do?doUpdate&id={id}&status=3" title="归档" message="确定归档吗？"></t:dgConfOpt>
    </c:if>
+    <t:dgConfOpt url="zTakeinController.do?doDel&id={id}" title="删除" message="确定删除吗？"></t:dgConfOpt>
    <%--<t:dgDelOpt title="删除" url="zTakeinController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="编辑" icon="icon-edit" url="zTakeinController.do?goUpdate" funname="update"  width="800" height="500"></t:dgToolBar>
    <t:dgToolBar title="批量删除"  icon="icon-remove" url="zTakeinController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
@@ -77,7 +78,8 @@ function ExportXls() {
 
 //模板下载
 function ExportXlsByT() {
-	JeecgExcelExport("zTakeinController.do?exportXlsByT","zTakeinList");
+//	JeecgExcelExport("zTakeinController.do?exportXlsByT","zTakeinList");
+  window.open("/t.xls")
 }
 
 //bootstrap列表图片格式化

@@ -64,7 +64,7 @@ public class ZTakeinEntity implements java.io.Serializable {
 	private java.math.BigDecimal amount;
 	/**期限*/
 	@Excel(name="期限",width=15)
-	private java.lang.Integer timeLimit;
+	private java.lang.String timeLimit;
 	/**利率*/
 	@Excel(name="利率",width=15)
 	private java.math.BigDecimal rate;
@@ -427,7 +427,7 @@ public class ZTakeinEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="TIME_LIMIT",nullable=true,length=32)
-	public java.lang.Integer getTimeLimit(){
+	public java.lang.String getTimeLimit(){
 		return this.timeLimit;
 	}
 
@@ -435,7 +435,7 @@ public class ZTakeinEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.Integer
 	 *@param: java.lang.Integer  期限
 	 */
-	public void setTimeLimit(java.lang.Integer timeLimit){
+	public void setTimeLimit(java.lang.String timeLimit){
 		this.timeLimit = timeLimit;
 	}
 	/**
