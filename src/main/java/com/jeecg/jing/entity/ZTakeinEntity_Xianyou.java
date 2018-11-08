@@ -25,7 +25,7 @@ public class ZTakeinEntity_Xianyou implements java.io.Serializable {
 	private String saleName;
 	@Excel(name="客户姓名",width=15)
 	private String customName;
-	@Excel(name="入金时间",width=15,format = "yyyy-MM-dd HH:mm:ss")
+	@Excel(name="入金时间",width=15,format = "yyyy-MM-dd")
 	private Date takeinTime;
 	@Excel(name="金额",width=15)
 	private BigDecimal amount;
@@ -37,7 +37,7 @@ public class ZTakeinEntity_Xianyou implements java.io.Serializable {
 	private String phone;
 	@Excel(name="汇款账号",width=15)
 	private String bankAccount;
-	@Excel(name="到期时间",width=15,format = "yyyy-MM-dd HH:mm:ss")
+	@Excel(name="到期时间",width=15,format = "yyyy-MM-dd")
 	private Date endTime;
 	@Excel(name="备注",width=15)
 	private String comment;

@@ -2,7 +2,6 @@ package com.jeecg.jing.entity;
 
 import org.jeecgframework.poi.excel.annotation.Excel;
 
-import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -15,7 +14,7 @@ import java.util.Date;
  *
  */
 @SuppressWarnings("serial")
-public class ZTakeinEntity_Daoqi implements java.io.Serializable {
+public class ZTakeinEntity_Lixi implements java.io.Serializable {
 	@Excel(name="合同编号",width=15)
 	private String contract;
 	@Excel(name="收据编号",width=15)
@@ -26,12 +25,8 @@ public class ZTakeinEntity_Daoqi implements java.io.Serializable {
 	private String customName;
 	@Excel(name="入金时间",width=15,format = "yyyy-MM-dd")
 	private Date takeinTime;
-	@Excel(name="金额",width=15)
-	private BigDecimal amount;
 	@Excel(name="期限",width=15)
 	private Integer timeLimit;
-	@Excel(name="利率",width=15)
-	private BigDecimal rate;
 	@Excel(name="电话",width=15)
 	private String phone;
 	@Excel(name="汇款账号",width=15)
@@ -40,8 +35,6 @@ public class ZTakeinEntity_Daoqi implements java.io.Serializable {
 	private Date endTime;
 	@Excel(name="备注",width=15)
 	private String comment;
-	@Excel(name="出金时间",width=15,format = "yyyy-MM-dd")
-	private java.util.Date outTime;
 
 	public String getContract() {
 		return contract;
@@ -83,28 +76,12 @@ public class ZTakeinEntity_Daoqi implements java.io.Serializable {
 		this.takeinTime = takeinTime;
 	}
 
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
-	}
-
 	public Integer getTimeLimit() {
 		return timeLimit;
 	}
 
 	public void setTimeLimit(Integer timeLimit) {
 		this.timeLimit = timeLimit;
-	}
-
-	public BigDecimal getRate() {
-		return rate;
-	}
-
-	public void setRate(BigDecimal rate) {
-		this.rate = rate;
 	}
 
 	public String getPhone() {
@@ -137,13 +114,5 @@ public class ZTakeinEntity_Daoqi implements java.io.Serializable {
 
 	public void setComment(String comment) {
 		this.comment = comment;
-	}
-
-	public Date getOutTime() {
-		return outTime;
-	}
-
-	public void setOutTime(Date outTime) {
-		this.outTime = outTime;
 	}
 }

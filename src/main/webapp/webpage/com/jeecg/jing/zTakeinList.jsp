@@ -38,7 +38,7 @@
    <t:dgToolBar title="批量删除"  icon="icon-remove" url="zTakeinController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
    <t:dgToolBar title="查看" icon="icon-search" url="zTakeinController.do?goUpdate" funname="detail"  width="800" height="500"></t:dgToolBar>--%>
    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
-   <c:if test="${'xianyou' eq type ? true : false}">
+   <c:if test="${('xianyou' eq type && empty key) ? true : false}">
     <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
     <t:dgToolBar title="excel模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>
     <t:dgToolBar title="录入" icon="icon-add" url="zTakeinController.do?goAdd" funname="add"  width="800" height="500"></t:dgToolBar>

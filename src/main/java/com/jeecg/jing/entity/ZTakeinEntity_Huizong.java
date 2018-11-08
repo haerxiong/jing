@@ -30,7 +30,7 @@ public class ZTakeinEntity_Huizong implements java.io.Serializable {
 	private String comment;
 	@Excel(name="利率",width=15)
 	private BigDecimal rate;
-	@Excel(name="投资时间",width=15,format = "yyyy-MM-dd HH:mm:ss")
+	@Excel(name="投资时间",width=15,format = "yyyy-MM-dd")
 	private Date investTime;
 
 	public String getSaleName() {

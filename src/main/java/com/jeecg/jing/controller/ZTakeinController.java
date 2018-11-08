@@ -333,10 +333,14 @@ public class ZTakeinController extends BaseController {
 		List list = zTakeins;
 		Class exportType = ZTakeinEntity.class;
 		String type = request.getParameter("type");
+		String key = request.getParameter("key");
 		if(StringUtil.isNotEmpty(type)) {// 根据不同类型导出不同Excel模板
 			list = new ArrayList();
 			if("xianyou".equals(type)) {
 				exportType = ZTakeinEntity_Xianyou.class;
+				if("lixi".equals(key)) {
+					exportType = ZTakeinEntity_Lixi.class;
+				}
 			} else if("daoqi".equals(type)) {
 				exportType = ZTakeinEntity_Daoqi.class;
 			} else if("huizong".equals(type)) {
