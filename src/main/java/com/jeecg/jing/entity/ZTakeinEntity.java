@@ -436,6 +436,9 @@ public class ZTakeinEntity implements java.io.Serializable {
 	 *@param: java.lang.Integer  期限
 	 */
 	public void setTimeLimit(java.lang.String timeLimit){
+		if(timeLimit != null) {
+			timeLimit = timeLimit.replace("个", "").replace("月", "");
+		}
 		this.timeLimit = timeLimit;
 	}
 	/**

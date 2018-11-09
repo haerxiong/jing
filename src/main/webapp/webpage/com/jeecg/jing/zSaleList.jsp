@@ -5,8 +5,6 @@
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="zSaleList" checkbox="false" pagination="true" fitColumns="true" title="销售表" actionUrl="zSaleController.do?datagrid" idField="id" sortName="createDate" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="销售主键"  field="zSaleEntity.id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="销售员主键"  field="zSalemanEntity.id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="团队"  field="zSalemanEntity.teamName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="销售姓名"  field="saleName" query="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="入职时间" formatter="yyyy-MM-dd"  field="zSalemanEntity.joinTime"  queryMode="single"  width="120"></t:dgCol>
@@ -14,14 +12,14 @@
    <t:dgCol title="客户姓名"  field="customName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="签单金额"  field="amount"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="合同期限"  field="timeLimit"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="年化合计"  field="zSaleEntity.yearTotal"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="合计"  field="zSaleEntity.total"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="业绩年化"  field="zSaleEntity.performance"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="年化合计"  field="year_result"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="合计"  field="sum_amount"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="业绩年化"  field="sum_year"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备注"  field="zSaleEntity.comment"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="编辑信息" field="opt" width="400"></t:dgCol>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="zSaleController.do?goAdd" funname="add"  width="768"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="zSaleController.do?goUpdate" funname="update"  width="768"></t:dgToolBar>--%>
-   <t:dgFunOpt funname="goud(id)" title="销售明细"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
+   <%--<t:dgFunOpt funname="goud(id)" title="销售明细"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>--%>
    <t:dgFunOpt funname="goud2(id)" title="修改"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
    <t:dgFunOpt funname="goud3(saleName)" title="销售员"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
    <%--<t:dgDelOpt title="删除" url="zSaleController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>

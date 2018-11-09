@@ -32,7 +32,7 @@ CREATE TABLE `z_takein` (
   `id_card` varchar(32) DEFAULT NULL COMMENT '身份证号',
   `takein_time` datetime DEFAULT NULL COMMENT '入金时间',
   `amount` double DEFAULT NULL COMMENT '金额',
-  `time_limit` int(11) DEFAULT NULL COMMENT '期限',
+  `time_limit` varchar(32) DEFAULT NULL COMMENT '期限',
   `rate` double DEFAULT NULL COMMENT '利率',
   `phone` varchar(32) DEFAULT NULL COMMENT '电话',
   `bank_account` varchar(32) DEFAULT NULL COMMENT '汇款账号',
@@ -41,6 +41,8 @@ CREATE TABLE `z_takein` (
   `status` varchar(32) DEFAULT '1' COMMENT '状态',
   `out_time` datetime DEFAULT NULL COMMENT '出金时间',
   `invest_time` datetime DEFAULT NULL COMMENT '投资时间',
+  `sys_org_code` varchar(50) DEFAULT NULL COMMENT '所属部门',
+  `sys_company_code` varchar(50) DEFAULT NULL COMMENT '所属公司',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

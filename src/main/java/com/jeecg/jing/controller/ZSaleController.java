@@ -3,6 +3,7 @@ import com.jeecg.jing.entity.ZSaleEntity;
 import com.jeecg.jing.entity.ZTakeinEntity;
 import com.jeecg.jing.service.ZSaleServiceI;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -100,14 +101,51 @@ public class ZSaleController extends BaseController {
 		try{
 		//自定义追加查询条件
 			cq.notEq("status", "3");
-			cq.getDetachedCriteria().createCriteria("zSaleEntity", JoinType.LEFT_OUTER_JOIN);
+//			cq.getDetachedCriteria().createCriteria("zSaleEntity", JoinType.LEFT_OUTER_JOIN);
 			cq.getDetachedCriteria().createCriteria("zSalemanEntity", JoinType.LEFT_OUTER_JOIN);
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
 		cq.add();
 		this.zSaleService.getDataGridReturn(cq, true);
-		TagUtil.datagrid(response, dataGrid);
+
+		// 扩展‘年化合计、合计、业绩年化’字段
+		Map<String, Map<String, Object>> map = new HashMap<String,Map<String,Object>>();
+		List<Object[]> rs = systemService.findListbySql("select sum(a.amount) sum_amount, sum(a.amount*a.year_result) sum_year, a.sale_name" +
+				" from(select z.id, z.amount,z.time_limit,z.sale_name," +
+				"case WHEN z.time_limit in('3','6','12') then round(z.time_limit/12,2)" +
+				"ELSE '0.08' end 'year_result'" +
+				"from z_takein z) a GROUP BY a.sale_name");
+		List<ZTakeinEntity> results = dataGrid.getResults();
+		for (ZTakeinEntity z : results) {
+			Map<String,Object> m = new HashMap<String,Object>();
+			String sum_amount = "0";
+			String sum_year = "0";
+			BigDecimal year_result = new BigDecimal(0.08);
+			try {
+				for(Object[] item : rs) {
+					if(z.getSaleName().equals(item[2])) {
+						sum_amount = item[0].toString();
+						sum_year = item[1].toString();
+						break;
+					}
+				}
+				if("3".equals(z.getTimeLimit()) || "6".equals(z.getTimeLimit()) || "9".equals(z.getTimeLimit()) || "12".equals(z.getTimeLimit())) {
+					BigDecimal bd = new BigDecimal(z.getTimeLimit());
+					year_result = bd.divide(new BigDecimal(12));
+					year_result.setScale(2);
+				}
+				year_result = year_result.multiply(z.getAmount());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			m.put("sum_amount", sum_amount);
+			m.put("sum_year", sum_year);
+			m.put("year_result", year_result);
+			map.put(z.getId(), m);
+		}
+
+		TagUtil.datagrid(response, dataGrid, map);
 	}
 	
 	/**
