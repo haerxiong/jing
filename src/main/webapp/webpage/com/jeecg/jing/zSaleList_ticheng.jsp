@@ -3,18 +3,18 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="zSaleList" checkbox="false" pagination="true" fitColumns="true" title="销售表" actionUrl="zSaleController.do?datagrid" idField="id" sortName="createDate" fit="true" queryMode="group">
+  <t:datagrid name="zSaleList" checkbox="false" pagination="true" fitColumns="true" title="销售表" actionUrl="zSaleController.do?datagrid&type=${type}" idField="id" sortName="createDate" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="团队"  field="zSalemanEntity.teamName"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="团队"  field="zSalemanEntity.teamName" query="${not empty type ? true : false}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="销售姓名"  field="saleName" query="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="入职时间" formatter="yyyy-MM-dd"  field="zSalemanEntity.joinTime"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="签单时间" formatter="yyyy-MM-dd"  field="createDate"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="客户姓名"  field="customName"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="签单金额(万)"  field="amount"  queryMode="single"  width="120" align="right"></t:dgCol>
-   <t:dgCol title="合同期限(月)"  field="timeLimit"  queryMode="single"  width="120" align="right"></t:dgCol>
-   <t:dgCol title="年化合计"  field="year_result"  queryMode="single"  width="120" align="right"></t:dgCol>
-   <t:dgCol title="合计(万)"  field="sum_amount"  queryMode="single"  width="120" align="right"></t:dgCol>
-   <t:dgCol title="业绩年化"  field="sum_year"  queryMode="single"  width="120" align="right"></t:dgCol>
+   <t:dgCol title="金额(万)"  field="amount"  queryMode="single"  width="120" align="right"></t:dgCol>
+   <t:dgCol title="期限(月)"  field="timeLimit"  queryMode="single"  width="120" align="right"></t:dgCol>
+   <t:dgCol title="业绩(万)"  field="sum_amount"  queryMode="single"  width="120" align="right"></t:dgCol>
+   <t:dgCol title="提点"  field="percentages"  queryMode="single"  width="120" align="right"></t:dgCol>
+   <t:dgCol title="总计"  field="sum_percentages"  queryMode="single"  width="120" align="right"></t:dgCol>
+   <t:dgCol title="团队合计(万)"  field="sum_amount_team"  queryMode="single"  width="120" align="right"></t:dgCol>
    <t:dgCol title="备注"  field="zSaleEntity.comment"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="编辑信息" field="opt" width="400"></t:dgCol>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="zSaleController.do?goAdd" funname="add"  width="768"></t:dgToolBar>
@@ -48,7 +48,6 @@
      createwindow('销售员', 'zSalemanController.do?goUpdate&saleName='+encodeURI(saleName) , 768, null);
  }
 
- 
 //导入
 function ImportXls() {
 	openuploadwin('Excel导入', 'zSaleController.do?upload', "zSaleList");

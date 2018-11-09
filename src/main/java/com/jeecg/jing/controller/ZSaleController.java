@@ -74,7 +74,16 @@ public class ZSaleController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/jeecg/jing/zSaleList");
+		String type = request.getParameter("type");
+
+		String viewName = "com/jeecg/jing/zSaleList";
+		if("ticheng".equals(type)) {
+			viewName = "com/jeecg/jing/zSaleList_ticheng";
+		}
+
+		ModelAndView modelAndView = new ModelAndView(viewName);
+		modelAndView.addObject("type", type);
+		return modelAndView;
 	}
 
 	/**
@@ -99,49 +108,97 @@ public class ZSaleController extends BaseController {
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zTakein, request.getParameterMap());
 		try{
-		//自定义追加查询条件
+			//自定义追加查询条件
 			cq.notEq("status", "3");
 //			cq.getDetachedCriteria().createCriteria("zSaleEntity", JoinType.LEFT_OUTER_JOIN);
-			cq.getDetachedCriteria().createCriteria("zSalemanEntity", JoinType.LEFT_OUTER_JOIN);
+			cq.getDetachedCriteria().createAlias("zSalemanEntity", "s", JoinType.LEFT_OUTER_JOIN);
+			String teamName = request.getParameter("zSalemanEntity.teamName");
+			if(StringUtil.isNotEmpty(teamName)) {
+				cq.eq("s.teamName", teamName);
+			}
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
 		cq.add();
 		this.zSaleService.getDataGridReturn(cq, true);
 
-		// 扩展‘年化合计、合计、业绩年化’字段
 		Map<String, Map<String, Object>> map = new HashMap<String,Map<String,Object>>();
-		List<Object[]> rs = systemService.findListbySql("select sum(a.amount) sum_amount, sum(a.amount*a.year_result) sum_year, a.sale_name" +
-				" from(select z.id, z.amount,z.time_limit,z.sale_name," +
-				"case WHEN z.time_limit in('3','6','12') then round(z.time_limit/12,2)" +
-				"ELSE '0.08' end 'year_result'" +
-				"from z_takein z) a GROUP BY a.sale_name");
 		List<ZTakeinEntity> results = dataGrid.getResults();
+		// 按销售员统计：总销售额、年化合计、提点总计
+		List<Object[]> rs = systemService.findListbySql(
+				"select a.sale_name, sum(a.amount) sum_amount, sum(a.amount*a.year_result) sum_year, sum(a.amount*a.percentages) from(" +
+						"select z.id, z.amount,z.time_limit,z.sale_name" +
+						",case WHEN z.time_limit in('3','6','12') then round(z.time_limit/12,2) ELSE '0.08' end 'year_result'" +
+						",case z.time_limit WHEN '12' then '80' when '6' then '40' else '40' end percentages" +
+						" from z_takein z where z.status != '3' " +
+						") a GROUP BY a.sale_name");
+		// 按团队统计：业绩总和
+		List<Object[]> teamRs = systemService.findListbySql(
+				"select m.team_name, sum(z.amount) from z_takein z, z_saleman m" +
+						" where z.sale_name = m.sale_name and z.status != '3' GROUP BY m.team_name");
 		for (ZTakeinEntity z : results) {
 			Map<String,Object> m = new HashMap<String,Object>();
 			String sum_amount = "0";
 			String sum_year = "0";
+			String percentages = "0";
+			String sum_percentages = "0";
+			String sum_amount_team = "0";
 			BigDecimal year_result = new BigDecimal(0.08);
+
+
+			// 按团队统计字段处理-------------------------------------------------
 			try {
-				for(Object[] item : rs) {
-					if(z.getSaleName().equals(item[2])) {
-						sum_amount = item[0].toString();
-						sum_year = item[1].toString();
+				for(Object[] item : teamRs) {
+					if(item[0].equals(z.getzSalemanEntity().getTeamName())) {
+						sum_amount_team = item[1].toString();
 						break;
 					}
 				}
-				if("3".equals(z.getTimeLimit()) || "6".equals(z.getTimeLimit()) || "9".equals(z.getTimeLimit()) || "12".equals(z.getTimeLimit())) {
-					BigDecimal bd = new BigDecimal(z.getTimeLimit());
-					year_result = bd.divide(new BigDecimal(12));
-					year_result.setScale(2);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			m.put("sum_amount_team", sum_amount_team);// 团队总销售额
+
+			// 按销售员统计字段处理-------------------------------------------------
+			try {
+				for(Object[] item : rs) {
+					if(z.getSaleName().equals(item[0])) {
+						sum_amount = item[1].toString();
+						sum_year = item[2].toString();
+						sum_percentages = item[3].toString();
+						break;
+					}
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			m.put("sum_amount", sum_amount);// 总销售额
+			m.put("sum_year", sum_year);// 年化合计
+			m.put("sum_percentages", sum_percentages);// 总计(提成)
+
+			// 行字段【年化】处理-------------------------------------------------
+			try {
+				if("3".equals(z.getTimeLimit()) || "6".equals(z.getTimeLimit()) || "9".equals(z.getTimeLimit()) || "12".equals(z.getTimeLimit())) {
+                    BigDecimal bd = new BigDecimal(z.getTimeLimit());
+                    year_result = bd.divide(new BigDecimal(12));
+                    year_result.setScale(2);
+                }
 				year_result = year_result.multiply(z.getAmount());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			m.put("sum_amount", sum_amount);
-			m.put("sum_year", sum_year);
-			m.put("year_result", year_result);
+
+			// 行字段【提点】处理-------------------------------------------------
+			try {
+				percentages = ("12".equals(z.getTimeLimit())) ? "80" : "40";
+				percentages = new BigDecimal(percentages).multiply(z.getAmount()).toString();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			m.put("year_result", year_result);// 年化=金额*期限/12
+			m.put("percentages", percentages);// 提点=12、6、3个月80、40、40
+
 			map.put(z.getId(), m);
 		}
 

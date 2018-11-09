@@ -2,6 +2,8 @@ package com.jeecg.jing.controller;
 import com.jeecg.jing.entity.ZSalemanEntity;
 import com.jeecg.jing.service.ZSalemanServiceI;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -239,6 +241,11 @@ public class ZSalemanController extends BaseController {
 	public ModelAndView goUpdate(ZSalemanEntity zSaleman, HttpServletRequest req) {
 		String saleName = zSaleman.getSaleName();
 		if (StringUtil.isNotEmpty(zSaleman.getSaleName())) {
+			try {
+				saleName = new String(saleName.getBytes("iso-8859-1"), "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 			List<ZSalemanEntity> s = zSalemanService.findByProperty(ZSalemanEntity.class, "saleName", saleName);
 			zSaleman = s.size() > 0 ? s.get(0) : new ZSalemanEntity();
 			zSaleman.setSaleName(saleName);
