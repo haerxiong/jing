@@ -3,7 +3,8 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="zSaleList" checkbox="false" pagination="true" fitColumns="true" title="销售表" actionUrl="zSaleController.do?datagrid" idField="id" sortName="createDate" fit="true" queryMode="group">
+  <t:datagrid name="zSaleList" checkbox="false" pagination="true" fitColumns="true" title="销售表" onLoadSuccess="loadData"
+    actionUrl="zSaleController.do?datagrid" idField="id" sortName="createDate" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="团队"  field="zSalemanEntity.teamName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="销售姓名"  field="saleName" query="true" queryMode="single"  width="120"></t:dgCol>
@@ -33,8 +34,11 @@
  </div>
  <script type="text/javascript">
  $(document).ready(function(){
-
  });
+ 
+ function loadData(data) {
+     combine_single(data, ["saleName"], ["sum_amount", "sum_year"]);
+ }
 
  function goud(id) {
      createwindow('销售明细', 'zSaleController.do?goUpdate&id='+id , 768, null);

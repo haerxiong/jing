@@ -1847,3 +1847,36 @@ function toggleMoreToolbars(obj){
 		$(".toolbar-more-list").removeClass("active");
 	});
 }
+
+/* 合并列方法
+  data onLoadSucess第一个参数
+  names 相同合并的依据，数组
+  colNamesList 需要合并的列，双层数组
+*/
+function combine_multi(data, names, colNamesList) {
+    for(var i = 0; i < names.length; i++) {
+        combine_item(data, names[i], colNamesList[i]);
+    }
+}
+
+function combine_single(data, name, colNames) {
+    var key = '';
+    var lastIndex = 0;
+    for(var i = 0; i < data.rows.length; i++) {
+        if(key != data.rows[i][name]) {
+            key = data.rows[i][name];
+            for(var j = 0; j < colNames.length; j++) {
+                $($("[field='"+colNames[j]+"']")[lastIndex+1]).attr("rowspan", i-lastIndex);
+            }
+            lastIndex = i;
+        } else {
+            for(var j = 0; j < colNames.length; j++) {
+                $($("[field='"+colNames[j]+"']")[i+1]).hide();
+            }
+        }
+    }
+    // 最后一行特殊处理
+    for(var j = 0; j < colNames.length; j++) {
+        $($("[field='"+colNames[j]+"']")[lastIndex+1]).attr("rowspan", i-lastIndex);
+    }
+}
