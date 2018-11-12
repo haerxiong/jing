@@ -169,7 +169,7 @@ public class ZTakeinController extends BaseController {
 		// 现金利息处理
 		String key2 = request.getParameter("key2");
 		if("xianjin".equals(key2)) {
-			cq.or(Restrictions.like("comment", "现金"), Restrictions.like("bankAccount", "现金"));
+			cq.or(Restrictions.like("comment", "%现金%"), Restrictions.like("bankAccount", "%现金%"));
 		}
 	}
 

@@ -33,7 +33,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="form-group" style="display: none">
 			<label for="comment" class="col-sm-3 control-label">备注：</label>
 			<div class="col-sm-7">
 				<div class="input-group" style="width:100%">

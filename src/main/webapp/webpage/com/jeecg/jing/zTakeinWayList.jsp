@@ -11,7 +11,7 @@
    <t:dgCol title="金额"  field="amount"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="到期时间" formatter="yyyy-MM-dd"  field="endTime"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="付款方式"  field="zTakeinWayEntity.payType"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="备注"  field="zTakeinWayEntity.comment"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="150"></t:dgCol>
    <t:dgFunOpt funname="goud(id)" title="付款方式"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
    <t:dgFunOpt funname="goud2(id)" title="修改"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
