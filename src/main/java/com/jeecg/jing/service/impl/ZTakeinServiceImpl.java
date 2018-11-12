@@ -2,7 +2,6 @@ package com.jeecg.jing.service.impl;
 import com.jeecg.jing.entity.ZSalemanEntity;
 import com.jeecg.jing.service.ZSalemanServiceI;
 import com.jeecg.jing.service.ZTakeinServiceI;
-import com.sun.javafx.binding.StringFormatter;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import com.jeecg.jing.entity.ZTakeinEntity;
 import org.springframework.stereotype.Service;
@@ -10,15 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.io.Serializable;
-import org.jeecgframework.core.util.ApplicationContextUtil;
-import org.jeecgframework.core.util.MyClassLoader;
-import org.jeecgframework.core.util.StringUtil;
-import org.jeecgframework.web.cgform.enhance.CgformEnhanceJavaInter;
-
-import org.jeecgframework.minidao.util.FreemarkerParseFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.jeecgframework.core.util.ResourceUtil;
 import org.springframework.util.StringUtils;
 
 @Service("zTakeinService")
@@ -45,11 +37,11 @@ public class ZTakeinServiceImpl extends CommonServiceImpl implements ZTakeinServ
 		// 其他校验
 		List<ZTakeinEntity> idCard = findByProperty(ZTakeinEntity.class, "idCard", entity.getIdCard());
 		if(idCard.size() > 0 && entity.getSaleName() != null && !entity.getSaleName().equals(idCard.get(0).getSaleName())) {
-			throw new RuntimeException(StringFormatter.format("客户[%s]已由销售[%s]负责", entity.getCustomName(), entity.getSaleName()).get());
+			throw new RuntimeException("客户["+entity.getCustomName()+"]已由销售["+entity.getSaleName()+"]负责");
 		}
 		List<ZTakeinEntity> contract = findByProperty(ZTakeinEntity.class, "contract", entity.getContract());
 		if(idCard.size() > 0 && (entity.getId() == null || !entity.getId().equals(contract.get(0).getId()))) {
-			throw new RuntimeException(StringFormatter.format("合同号[%s]已存在", entity.getContract()).get());
+			throw new RuntimeException("合同号["+entity.getContract()+"]已存在");
 		}
 
 		// 设置到期时间
