@@ -27,8 +27,8 @@
    <t:dgToolBar title="批量删除"  icon="icon-remove" url="zSaleController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
    <t:dgToolBar title="查看" icon="icon-search" url="zSaleController.do?goUpdate" funname="detail"  width="768"></t:dgToolBar>
    <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
    <t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
+   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
   </t:datagrid>
   </div>
  </div>
@@ -61,7 +61,8 @@ function ImportXls() {
 
 //导出
 function ExportXls() {
-	JeecgExcelExport("zSaleController.do?exportXls","zSaleList");
+    var saleName = $("[name='saleName']").val();
+	JeecgExcelExport("zSaleController.do?exportXls&type=ticheng&teamName=&saleName="+encodeURI(saleName),"zSaleList");
 }
 
 //模板下载

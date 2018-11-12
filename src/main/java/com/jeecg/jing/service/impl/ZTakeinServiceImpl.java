@@ -44,11 +44,11 @@ public class ZTakeinServiceImpl extends CommonServiceImpl implements ZTakeinServ
 	private void beforeSave(ZTakeinEntity entity) throws Exception {
 		// 其他校验
 		List<ZTakeinEntity> idCard = findByProperty(ZTakeinEntity.class, "idCard", entity.getIdCard());
-		if(idCard.size() > 0 && entity.getSaleName() != null && entity.getSaleName().equals(idCard.get(0))) {
+		if(idCard.size() > 0 && entity.getSaleName() != null && !entity.getSaleName().equals(idCard.get(0).getSaleName())) {
 			throw new RuntimeException(StringFormatter.format("客户[%s]已由销售[%s]负责", entity.getCustomName(), entity.getSaleName()).get());
 		}
 		List<ZTakeinEntity> contract = findByProperty(ZTakeinEntity.class, "contract", entity.getContract());
-		if(idCard.size() > 0) {
+		if(idCard.size() > 0 && entity.getId() != null && !entity.getId().equals(contract.get(0).getId())) {
 			throw new RuntimeException(StringFormatter.format("合同号[%s]已存在", entity.getContract()).get());
 		}
 

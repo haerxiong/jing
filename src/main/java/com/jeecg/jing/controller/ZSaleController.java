@@ -1,8 +1,11 @@
 package com.jeecg.jing.controller;
 import com.jeecg.jing.entity.ZSaleEntity;
 import com.jeecg.jing.entity.ZTakeinEntity;
+import com.jeecg.jing.entity.ZTakeinEntity_sale;
+import com.jeecg.jing.entity.ZTakeinEntity_ticheng;
 import com.jeecg.jing.service.ZSaleServiceI;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import org.hibernate.sql.JoinType;
 import org.jeecgframework.tag.vo.datatable.SortDirection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -100,12 +104,24 @@ public class ZSaleController extends BaseController {
 
 	@RequestMapping(params = "datagrid")
 	public void datagrid(ZSaleEntity zSale,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-//		CriteriaQuery cq = new CriteriaQuery(ZSaleEntity.class, dataGrid);
-		CriteriaQuery cq = new CriteriaQuery(ZTakeinEntity.class, dataGrid);
+		CriteriaQuery cq = queryAndExport(request, dataGrid);
+		this.zSaleService.getDataGridReturn(cq, true);
+		Map<String, Map<String, Object>> map = processResult(dataGrid);
+		TagUtil.datagrid(response, dataGrid, map);
+	}
 
+	private CriteriaQuery queryAndExport(HttpServletRequest request, DataGrid dataGrid) {
+		CriteriaQuery cq = new CriteriaQuery(ZTakeinEntity.class, dataGrid);
 		ZTakeinEntity zTakein = new ZTakeinEntity();
 		String saleName = request.getParameter("saleName");
 		if(StringUtil.isNotEmpty(saleName)) {
+			try {
+				if(request.getQueryString().startsWith("exportXls")) {
+					saleName = new String(saleName.getBytes("iso-8859-1"), "utf-8");
+				}
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 			zTakein.setSaleName(saleName);
 		}
 		//查询条件组装器
@@ -113,10 +129,16 @@ public class ZSaleController extends BaseController {
 		try{
 			//自定义追加查询条件
 			cq.notEq("status", "3");
-//			cq.getDetachedCriteria().createCriteria("zSaleEntity", JoinType.LEFT_OUTER_JOIN);
 			cq.getDetachedCriteria().createAlias("zSalemanEntity", "s", JoinType.LEFT_OUTER_JOIN);
 			String teamName = request.getParameter("zSalemanEntity.teamName");
 			if(StringUtil.isNotEmpty(teamName)) {
+				try {
+					if(request.getQueryString().startsWith("exportXls")) {
+						teamName = new String(teamName.getBytes("iso-8859-1"), "utf-8");
+					}
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
 				cq.eq("s.teamName", teamName);
 			}
 			cq.getDetachedCriteria().addOrder(Order.asc("s.teamName"));
@@ -125,10 +147,7 @@ public class ZSaleController extends BaseController {
 			throw new BusinessException(e.getMessage());
 		}
 		cq.add();
-		this.zSaleService.getDataGridReturn(cq, true);
-
-		Map<String, Map<String, Object>> map = processResult(dataGrid);
-		TagUtil.datagrid(response, dataGrid, map);
+		return cq;
 	}
 
 	private Map<String, Map<String, Object>> processResult(DataGrid dataGrid) {
@@ -191,9 +210,9 @@ public class ZSaleController extends BaseController {
 				if("3".equals(z.getTimeLimit()) || "6".equals(z.getTimeLimit()) || "9".equals(z.getTimeLimit()) || "12".equals(z.getTimeLimit())) {
                     BigDecimal bd = new BigDecimal(z.getTimeLimit());
                     year_result = bd.divide(new BigDecimal(12));
-                    year_result.setScale(2);
                 }
 				year_result = year_result.multiply(z.getAmount());
+				year_result = year_result.setScale(2, BigDecimal.ROUND_HALF_UP);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -373,14 +392,43 @@ public class ZSaleController extends BaseController {
 	@RequestMapping(params = "exportXls")
 	public String exportXls(ZSaleEntity zSale,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-		CriteriaQuery cq = new CriteriaQuery(ZSaleEntity.class, dataGrid);
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zSale, request.getParameterMap());
-		List<ZSaleEntity> zSales = this.zSaleService.getListByCriteriaQuery(cq,false);
-		modelMap.put(NormalExcelConstants.FILE_NAME,"销售表");
-		modelMap.put(NormalExcelConstants.CLASS,ZSaleEntity.class);
-		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("销售表列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+		CriteriaQuery cq = queryAndExport(request, dataGrid);
+		this.zSaleService.getDataGridReturn(cq, true);
+		Map<String, Map<String, Object>> map = processResult(dataGrid);
+		List<ZTakeinEntity> rs = dataGrid.getResults();
+
+		String type = request.getParameter("type");
+		List<Object> list = new ArrayList<Object>();
+		for(ZTakeinEntity e : rs) {
+			Map<String, Object> item = map.get(e.getId());
+			if("ticheng".equals(type)) {
+				ZTakeinEntity_ticheng t = new ZTakeinEntity_ticheng();
+				BeanUtils.copyProperties(e, t, ZTakeinEntity_ticheng.class);
+				t.setSum_amount(item.get("sum_amount").toString());
+				t.setSum_amount_team(item.get("sum_amount_team").toString());
+				t.setSum_percentages(item.get("sum_percentages").toString());
+				t.setPercentages(item.get("percentages").toString());
+				t.setTeamName(e.getzSalemanEntity().getTeamName());
+				t.setJoinTime(e.getzSalemanEntity().getJoinTime());
+				list.add(t);
+			} else {
+				ZTakeinEntity_sale t = new ZTakeinEntity_sale();
+				BeanUtils.copyProperties(e, t, ZTakeinEntity_sale.class);
+				t.setSum_amount(item.get("sum_amount").toString());
+				t.setSum_year(item.get("sum_year").toString());
+				t.setYear_result(item.get("year_result").toString());
+				t.setSignTime(e.getCreateDate());
+				t.setTeamName(e.getzSalemanEntity().getTeamName());
+				t.setJoinTime(e.getzSalemanEntity().getJoinTime());
+				list.add(t);
+			}
+		}
+
+		modelMap.put(NormalExcelConstants.FILE_NAME, "ticheng".equals(type) ? "销售提成发放" : "销售明细表");
+		modelMap.put(NormalExcelConstants.CLASS, "ticheng".equals(type) ? ZTakeinEntity_ticheng.class : ZTakeinEntity_sale.class);
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("销售提成发放", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
 			"导出信息"));
-		modelMap.put(NormalExcelConstants.DATA_LIST,zSales);
+		modelMap.put(NormalExcelConstants.DATA_LIST, list);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
 	/**
