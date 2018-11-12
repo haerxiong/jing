@@ -6,10 +6,8 @@ import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import com.jeecg.jing.entity.ZTakeinEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+
+import java.util.*;
 import java.io.Serializable;
 import org.jeecgframework.core.util.ApplicationContextUtil;
 import org.jeecgframework.core.util.MyClassLoader;
@@ -36,7 +34,17 @@ public class ZTakeinServiceImpl extends CommonServiceImpl implements ZTakeinServ
  	}
  	
  	public Serializable save(ZTakeinEntity entity) throws Exception{
- 		Serializable t = super.save(entity);
+		try {
+			if(entity.getEndTime() == null && entity.getTakeinTime() != null) {
+               Calendar cal = Calendar.getInstance();
+               cal.setTime(entity.getTakeinTime());
+               cal.add(Calendar.MONTH, Integer.parseInt(entity.getTimeLimit()));
+               entity.setEndTime(cal.getTime());
+            }
+		} catch (NumberFormatException e) {
+			// 活期不设置到期时间
+		}
+		Serializable t = super.save(entity);
 		saveSaleman(entity);
 		return t;
  	}

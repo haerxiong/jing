@@ -10,7 +10,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.criterion.Order;
 import org.hibernate.sql.JoinType;
+import org.jeecgframework.tag.vo.datatable.SortDirection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,12 +119,19 @@ public class ZSaleController extends BaseController {
 			if(StringUtil.isNotEmpty(teamName)) {
 				cq.eq("s.teamName", teamName);
 			}
+			cq.getDetachedCriteria().addOrder(Order.asc("s.teamName"));
+			cq.addOrder("saleName", SortDirection.asc);
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
 		cq.add();
 		this.zSaleService.getDataGridReturn(cq, true);
 
+		Map<String, Map<String, Object>> map = processResult(dataGrid);
+		TagUtil.datagrid(response, dataGrid, map);
+	}
+
+	private Map<String, Map<String, Object>> processResult(DataGrid dataGrid) {
 		Map<String, Map<String, Object>> map = new HashMap<String,Map<String,Object>>();
 		List<ZTakeinEntity> results = dataGrid.getResults();
 		// 按销售员统计：总销售额、年化合计、提点总计
@@ -202,10 +211,9 @@ public class ZSaleController extends BaseController {
 
 			map.put(z.getId(), m);
 		}
-
-		TagUtil.datagrid(response, dataGrid, map);
+		return map;
 	}
-	
+
 	/**
 	 * 删除销售表
 	 * 
