@@ -419,7 +419,7 @@ public class ZTakeinController extends BaseController {
 				}
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
-				j.setMsg("文件导入失败！");
+				j.setMsg("文件导入失败！"+e.getMessage());
 				logger.error(ExceptionUtil.getExceptionMessage(e));
 			}finally{
 				try {
