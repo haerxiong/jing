@@ -48,7 +48,7 @@ public class ZTakeinServiceImpl extends CommonServiceImpl implements ZTakeinServ
 			throw new RuntimeException(StringFormatter.format("客户[%s]已由销售[%s]负责", entity.getCustomName(), entity.getSaleName()).get());
 		}
 		List<ZTakeinEntity> contract = findByProperty(ZTakeinEntity.class, "contract", entity.getContract());
-		if(idCard.size() > 0 && entity.getId() != null && !entity.getId().equals(contract.get(0).getId())) {
+		if(idCard.size() > 0 && (entity.getId() == null || !entity.getId().equals(contract.get(0).getId()))) {
 			throw new RuntimeException(StringFormatter.format("合同号[%s]已存在", entity.getContract()).get());
 		}
 
