@@ -3,6 +3,7 @@ import com.jeecg.jing.entity.*;
 import com.jeecg.jing.service.ZSalemanServiceI;
 import com.jeecg.jing.service.ZTakeinServiceI;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
@@ -145,6 +146,14 @@ public class ZTakeinController extends BaseController {
 	* 导出excel和查询公用方法
 	**/
 	private CriteriaQuery queryAndExport(ZTakeinEntity zTakein, HttpServletRequest request, DataGrid dataGrid) {
+		try {
+			if(request.getQueryString().startsWith("exportXls")) {
+				if(zTakein.getCustomName() != null)
+					zTakein.setCustomName(new String(zTakein.getCustomName().getBytes("iso-8859-1"), "utf-8"));
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		CriteriaQuery cq = new CriteriaQuery(ZTakeinEntity.class, dataGrid);
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zTakein, request.getParameterMap());
@@ -353,6 +362,7 @@ public class ZTakeinController extends BaseController {
 		Class exportType = ZTakeinEntity.class;
 		String type = request.getParameter("type");
 		String key = request.getParameter("key");
+		String key2 = request.getParameter("key2");
 		if(StringUtil.isNotEmpty(type)) {// 根据不同类型导出不同Excel模板
 			list = new ArrayList();
 			if("xianyou".equals(type)) {
@@ -363,6 +373,11 @@ public class ZTakeinController extends BaseController {
 					exportType = ZTakeinEntity_Lixi.class;
                     fileName = "客户利息";
                     title = fileName + "列表";
+                    if("xianjin".equals(key2)) {
+						exportType = ZTakeinEntity_Xianjin.class;
+						fileName = "客户现金利息明细";
+						title = fileName + "列表";
+					}
 				} else if("yue".equals(key)) {
                     String takeinTime = request.getParameter("takeinTime2");
                     fileName = takeinTime + "客户单月流水汇总";
@@ -384,9 +399,12 @@ public class ZTakeinController extends BaseController {
 				try {
 					t = constructor.newInstance();
 					BeanUtils.copyProperties(z, t, exportType);
-					if("huizong".equals(type)) {
+					if(ZTakeinEntity_Huizong.class.equals(exportType)) {// 客户量
 						ZTakeinEntity_Huizong hz = (ZTakeinEntity_Huizong) t;
 						hz.setCount(map.get(z.getId()).get("count").toString());
+					} else if(ZTakeinEntity_Xianjin.class.equals(exportType)) {// 利息
+						ZTakeinEntity_Xianjin xj = (ZTakeinEntity_Xianjin) t;
+						xj.setInterest(map.get(z.getId()).get("interest").toString());
 					}
 					list.add(t);
 				} catch (Exception e) {
