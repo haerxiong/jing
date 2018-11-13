@@ -17,7 +17,7 @@
    <t:dgCol title="电话"  field="phone"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="汇款账号"  field="bankAccount"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="到期时间"  field="endTime" formatter="yyyy-MM-dd" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="合计金额"  field="ext1"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="合计金额(元)"  field="interest"  queryMode="single"  width="120" align="right"></t:dgCol>
    <t:dgCol title="客户签字"  field="ext2"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="150"></t:dgCol>

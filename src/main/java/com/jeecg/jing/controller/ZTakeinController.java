@@ -5,6 +5,7 @@ import com.jeecg.jing.service.ZTakeinServiceI;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -119,14 +120,24 @@ public class ZTakeinController extends BaseController {
 		for (ZTakeinEntity z : results) {
             Map<String,Object> m = new HashMap<String,Object>();
             String s = "0";
+
+            // 客户量统计
             try {
                 s = rs.get(0).split(z.getSaleName() + "_")[1].split(",")[0];
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            m.put("count", s);
-            map.put(z.getId(), m);
-        }
+			m.put("count", s);
+
+			// 利息统计：金额*利率
+			try {
+				m.put("interest", z.getAmount().multiply(z.getRate()).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			map.put(z.getId(), m);
+		}
 		return map;
 	}
 
