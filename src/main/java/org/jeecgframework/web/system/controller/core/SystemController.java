@@ -10,15 +10,7 @@ import java.net.SocketException;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -240,6 +232,13 @@ public class SystemController extends BaseController {
         	 cq.eq("typegroupcode", typegroupcode);
         	 cq.add();
         }
+		try {
+			SimpleDateFormat f = new SimpleDateFormat("yyyyMMdd");
+			cq.gt("createDate", f.parse("20181101"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		cq.add();
 		this.systemService.getDataGridReturn(cq, true);
         MutiLangUtil.setMutiLangValueForList(dataGrid.getResults(), "typegroupname");
 

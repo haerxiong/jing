@@ -9,13 +9,13 @@
             <t:dgCol title="dict.name" field="typegroupname" width="100" query="true"></t:dgCol>
             <t:dgCol title="dict.code" field="typegroupcode" width="100" treefield="code" query="true"></t:dgCol>
             <t:dgCol title="common.operation" field="opt" width="100"></t:dgCol>
-            <t:dgDelOpt url="systemController.do?delTypeGroup&id={id}" title="common.delete" urlclass="ace_button" urlStyle="background-color:#ec4758;" urlfont="fa-trash-o"></t:dgDelOpt>
-            <t:dgFunOpt funname="queryTypeValue(id)" title="common.type.view" urlclass="ace_button"  urlfont="fa-search"></t:dgFunOpt>
-            <t:dgToolBar title="common.add.param" langArg="lang.dictionary.type" icon="fa fa-plus" url="systemController.do?aouTypeGroup" funname="add"></t:dgToolBar>
-            <%--<t:dgToolBar title="common.add.param" langArg="lang.dictionary.value" icon="icon-add" funname="typeGridTree_AddType"></t:dgToolBar>--%>
+            <%--<t:dgDelOpt url="systemController.do?delTypeGroup&id={id}" title="common.delete" urlclass="ace_button" urlStyle="background-color:#ec4758;" urlfont="fa-trash-o"></t:dgDelOpt>
+            --%><t:dgFunOpt funname="queryTypeValue(id)" title="common.type.view" urlclass="ace_button"  urlfont="fa-search"></t:dgFunOpt>
+            <%--<t:dgToolBar title="common.add.param" langArg="lang.dictionary.type" icon="fa fa-plus" url="systemController.do?aouTypeGroup" funname="add"></t:dgToolBar>
+            &lt;%&ndash;<t:dgToolBar title="common.add.param" langArg="lang.dictionary.value" icon="icon-add" funname="typeGridTree_AddType"></t:dgToolBar>&ndash;%&gt;
             <t:dgToolBar title="common.edit" icon="fa fa-edit" url="systemController.do?aouTypeGroup" funname="update"></t:dgToolBar>
             <t:dgToolBar title="common.refreshType" icon="fa fa-refresh" url="systemController.do?refreshTypeGroupAndTypes" funname="doSubmit"></t:dgToolBar>
-        </t:datagrid>
+        --%></t:datagrid>
     </div>
 </div>
 
