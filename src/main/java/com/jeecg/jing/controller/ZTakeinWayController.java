@@ -1,5 +1,6 @@
 package com.jeecg.jing.controller;
 import com.jeecg.jing.entity.ZTakeinEntity;
+import com.jeecg.jing.entity.ZTakeinEntity_ri;
 import com.jeecg.jing.entity.ZTakeinWayEntity;
 import com.jeecg.jing.service.ZTakeinWayServiceI;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.sql.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -85,6 +87,12 @@ public class ZTakeinWayController extends BaseController {
 	@RequestMapping(params = "datagrid")
 	public void datagrid(ZTakeinWayEntity zTakeinWay,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 //		CriteriaQuery cq = new CriteriaQuery(ZTakeinWayEntity.class, dataGrid);
+		CriteriaQuery cq = queryAndExport(zTakeinWay, request, dataGrid);
+		this.zTakeinWayService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dataGrid);
+	}
+
+	private CriteriaQuery queryAndExport(ZTakeinWayEntity zTakeinWay, HttpServletRequest request, DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(ZTakeinEntity.class, dataGrid);
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zTakeinWay, request.getParameterMap());
@@ -104,10 +112,9 @@ public class ZTakeinWayController extends BaseController {
 			throw new BusinessException(e.getMessage());
 		}
 		cq.add();
-		this.zTakeinWayService.getDataGridReturn(cq, true);
-		TagUtil.datagrid(response, dataGrid);
+		return cq;
 	}
-	
+
 	/**
 	 * 删除入金方式表
 	 * 
@@ -267,14 +274,24 @@ public class ZTakeinWayController extends BaseController {
 	@RequestMapping(params = "exportXls")
 	public String exportXls(ZTakeinWayEntity zTakeinWay,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-		CriteriaQuery cq = new CriteriaQuery(ZTakeinWayEntity.class, dataGrid);
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zTakeinWay, request.getParameterMap());
-		List<ZTakeinWayEntity> zTakeinWays = this.zTakeinWayService.getListByCriteriaQuery(cq,false);
-		modelMap.put(NormalExcelConstants.FILE_NAME,"入金方式表");
-		modelMap.put(NormalExcelConstants.CLASS,ZTakeinWayEntity.class);
-		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("入金方式表列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+		CriteriaQuery cq = queryAndExport(zTakeinWay, request, dataGrid);
+//		List<ZTakeinEntity> zTakeins = this.zTakeinWayService.getListByCriteriaQuery(cq,false);
+		this.zTakeinWayService.getDataGridReturn(cq, true);
+		List<ZTakeinEntity> zTakeins = dataGrid.getResults();
+
+		List<ZTakeinEntity_ri> list = new ArrayList<ZTakeinEntity_ri>();
+		for(ZTakeinEntity e : zTakeins) {
+			ZTakeinEntity_ri t = new ZTakeinEntity_ri();
+			BeanUtils.copyProperties(e, t, t.getClass());
+			t.setSignTime(e.getCreateDate());
+			t.setPayType(e.getzTakeinWayEntity() == null ? "" : e.getzTakeinWayEntity().getPayType());
+			list.add(t);
+		}
+		modelMap.put(NormalExcelConstants.FILE_NAME,"客户资金日报表");
+		modelMap.put(NormalExcelConstants.CLASS, ZTakeinEntity_ri.class);
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("客户资金日报表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
 			"导出信息"));
-		modelMap.put(NormalExcelConstants.DATA_LIST,zTakeinWays);
+		modelMap.put(NormalExcelConstants.DATA_LIST, list);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
 	/**
