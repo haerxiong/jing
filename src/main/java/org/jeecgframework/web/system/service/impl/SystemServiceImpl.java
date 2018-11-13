@@ -134,8 +134,6 @@ public class SystemServiceImpl extends CommonServiceImpl implements SystemServic
 	/**
 	 * 根据类型分组编码和名称获取TypeGroup,如果为空则创建一个
 	 *
-	 * @param typecode
-	 * @param typename
 	 * @return
 	 */
 	@Transactional(readOnly = true)

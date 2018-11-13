@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.criterion.Order;
 import org.hibernate.sql.JoinType;
 import org.jeecgframework.tag.vo.datatable.SortDirection;
+import org.jeecgframework.web.system.pojo.base.DictEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -99,7 +100,6 @@ public class ZSaleController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
 	 */
 
 	@RequestMapping(params = "datagrid")
@@ -164,6 +164,9 @@ public class ZSaleController extends BaseController {
 		List<Object[]> teamRs = systemService.findListbySql(
 				"select m.team_name, sum(z.amount) from z_takein z, z_saleman m" +
 						" where z.sale_name = m.sale_name and z.status != '3' GROUP BY m.team_name");
+		// 年化
+		List<DictEntity> year_rs = systemService.queryDict(null, "year_rs", null);
+		List<DictEntity> per = systemService.queryDict(null, "per", null);
 		for (ZTakeinEntity z : results) {
 			Map<String,Object> m = new HashMap<String,Object>();
 			String sum_amount = "0";
@@ -177,7 +180,7 @@ public class ZSaleController extends BaseController {
 			// 按团队统计字段处理-------------------------------------------------
 			try {
 				for(Object[] item : teamRs) {
-					if(item[0].equals(z.getzSalemanEntity().getTeamName())) {
+					if(item.length == 2 && item[0].equals(z.getzSalemanEntity().getTeamName())) {
 						sum_amount_team = item[1].toString();
 						break;
 					}
@@ -205,23 +208,28 @@ public class ZSaleController extends BaseController {
 			m.put("sum_percentages", sum_percentages);// 总计(提成)
 
 			// 行字段【年化】处理-------------------------------------------------
-			try {
-				if("3".equals(z.getTimeLimit()) || "6".equals(z.getTimeLimit()) || "9".equals(z.getTimeLimit()) || "12".equals(z.getTimeLimit())) {
-                    BigDecimal bd = new BigDecimal(z.getTimeLimit());
-                    year_result = bd.divide(new BigDecimal(12));
-                }
-				year_result = year_result.multiply(z.getAmount());
-				year_result = year_result.setScale(2, BigDecimal.ROUND_HALF_UP);
-			} catch (Exception e) {
-				e.printStackTrace();
+			for(DictEntity de : year_rs) {
+				try {
+					if(de.getTypecode().equals(z.getTimeLimit())) {
+                        year_result = new BigDecimal(de.getTypename());
+                        break;
+                    }
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
+			year_result = year_result.setScale(2, BigDecimal.ROUND_HALF_UP);
 
 			// 行字段【提点】处理-------------------------------------------------
-			try {
-				percentages = ("12".equals(z.getTimeLimit())) ? "80" : "40";
-				percentages = new BigDecimal(percentages).multiply(z.getAmount()).toString();
-			} catch (Exception e) {
-				e.printStackTrace();
+			for(DictEntity de : per) {
+				try {
+					if(de.getTypecode().equals(z.getTimeLimit())) {
+						percentages = de.getTypename();
+						break;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 
 			m.put("year_result", year_result);// 年化=金额*期限/12
@@ -288,7 +296,6 @@ public class ZSaleController extends BaseController {
 	/**
 	 * 添加销售表
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -312,7 +319,6 @@ public class ZSaleController extends BaseController {
 	/**
 	 * 更新销售表
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")

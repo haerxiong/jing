@@ -1860,7 +1860,7 @@ function combine_multi(data, names, colNamesList) {
 }
 
 function combine_single(data, name, colNames) {
-    var key = '';
+    var key = '------------';
     var lastIndex = 0;
     for(var i = 0; i < data.rows.length; i++) {
         if(key != data.rows[i][name]) {
