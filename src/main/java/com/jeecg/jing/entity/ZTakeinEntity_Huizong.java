@@ -18,6 +18,8 @@ import java.util.Date;
 public class ZTakeinEntity_Huizong implements java.io.Serializable {
 	@Excel(name="销售姓名",width=15)
 	private String saleName;
+	@Excel(name="客户量",width=15, mergeVertical=true)
+	private String count;
 	@Excel(name="客户姓名",width=15)
 	private String customName;
 	@Excel(name="身份证号",width=15)
@@ -32,6 +34,14 @@ public class ZTakeinEntity_Huizong implements java.io.Serializable {
 	private BigDecimal rate;
 	@Excel(name="投资时间",width=15,format = "yyyy/MM/dd")
 	private Date investTime;
+
+	public String getCount() {
+		return count;
+	}
+
+	public void setCount(String count) {
+		this.count = count;
+	}
 
 	public String getSaleName() {
 		return saleName;

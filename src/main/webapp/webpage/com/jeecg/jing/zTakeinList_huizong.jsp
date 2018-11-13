@@ -3,7 +3,8 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="zTakeinList" checkbox="false" pagination="true" fitColumns="true" title="客户信息" actionUrl="zTakeinController.do?datagrid&type=huizong" idField="id" sortName="createDate" fit="true" queryMode="group">
+  <t:datagrid name="zTakeinList" checkbox="false" pagination="true" fitColumns="true" title="客户信息" onLoadSuccess="loadData"
+   actionUrl="zTakeinController.do?datagrid&type=huizong" idField="id" sortName="createDate" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -37,6 +38,10 @@
  <script type="text/javascript">
  $(document).ready(function(){
  });
+
+ function loadData(data) {
+     combine_single(data, ["saleName"], ["count"]);
+ }
 
  function goud2(id) {
      createwindow('修改', 'zTakeinController.do?goUpdate&id='+id , 768, null);

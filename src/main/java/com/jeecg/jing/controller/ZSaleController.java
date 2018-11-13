@@ -106,7 +106,7 @@ public class ZSaleController extends BaseController {
 	public void datagrid(ZSaleEntity zSale,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		CriteriaQuery cq = queryAndExport(request, dataGrid);
 		this.zSaleService.getDataGridReturn(cq, true);
-		Map<String, Map<String, Object>> map = processResult(dataGrid);
+		Map<String, Map<String, Object>> map = processResult(dataGrid.getResults());
 		TagUtil.datagrid(response, dataGrid, map);
 	}
 
@@ -150,9 +150,8 @@ public class ZSaleController extends BaseController {
 		return cq;
 	}
 
-	private Map<String, Map<String, Object>> processResult(DataGrid dataGrid) {
+	private Map<String, Map<String, Object>> processResult(List<ZTakeinEntity> results) {
 		Map<String, Map<String, Object>> map = new HashMap<String,Map<String,Object>>();
-		List<ZTakeinEntity> results = dataGrid.getResults();
 		// 按销售员统计：总销售额、年化合计、提点总计
 		List<Object[]> rs = systemService.findListbySql(
 				"select a.sale_name, sum(a.amount) sum_amount, sum(a.amount*a.year_result) sum_year, sum(a.amount*a.percentages) from(" +
@@ -393,8 +392,8 @@ public class ZSaleController extends BaseController {
 	public String exportXls(ZSaleEntity zSale,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
 		CriteriaQuery cq = queryAndExport(request, dataGrid);
-		this.zSaleService.getDataGridReturn(cq, true);
-		Map<String, Map<String, Object>> map = processResult(dataGrid);
+		List<ZTakeinEntity> zTakeins = zSaleService.getListByCriteriaQuery(cq, false);
+		Map<String, Map<String, Object>> map = processResult(zTakeins);
 		List<ZTakeinEntity> rs = dataGrid.getResults();
 
 		String type = request.getParameter("type");

@@ -102,23 +102,21 @@ public class ZTakeinController extends BaseController {
 
 	@RequestMapping(params = "datagrid")
 	public void datagrid(ZTakeinEntity zTakein,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-		CriteriaQuery cq = new CriteriaQuery(ZTakeinEntity.class, dataGrid);
-		//查询条件组装器
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zTakein, request.getParameterMap());
-		try{
-		//自定义追加查询条件
-			selfSet(request, cq);
-		}catch (Exception e) {
-			throw new BusinessException(e.getMessage());
-		}
-		cq.add();
+		CriteriaQuery cq = queryAndExport(zTakein, request, dataGrid);
 		this.zTakeinService.getDataGridReturn(cq, true);
 
+		List<ZTakeinEntity> results = dataGrid.getResults();
+		Map<String, Map<String, Object>> map = processResult(results);
+		TagUtil.datagrid(response, dataGrid, map);
+	}
+
+	private Map<String, Map<String, Object>> processResult(List<ZTakeinEntity> results) {
 		// 扩展‘客户量’字段
-        Map<String, Map<String, Object>> map = new HashMap<String,Map<String,Object>>();
-        List<String> rs = systemService.findListbySql("SELECT group_concat(r separator ',') from(SELECT CONCAT_WS('_', t.sale_name,count(1)) r from (SELECT DISTINCT a.sale_name, a.custom_name from z_takein a) t GROUP BY t.sale_name) a ");
-        List<ZTakeinEntity> results = dataGrid.getResults();
-        for (ZTakeinEntity z : results) {
+		Map<String, Map<String, Object>> map = new HashMap<String,Map<String,Object>>();
+		List<String> rs = systemService.findListbySql("SELECT group_concat(r separator ',') from("
+			+ "SELECT CONCAT_WS('_', t.sale_name,count(1)) r from (SELECT DISTINCT a.sale_name, a.custom_name from z_takein a where a.status = '1'"
+			+ ") t GROUP BY t.sale_name) a ");
+		for (ZTakeinEntity z : results) {
             Map<String,Object> m = new HashMap<String,Object>();
             String s = "0";
             try {
@@ -129,48 +127,57 @@ public class ZTakeinController extends BaseController {
             m.put("count", s);
             map.put(z.getId(), m);
         }
-
-		TagUtil.datagrid(response, dataGrid, map);
+		return map;
 	}
 
 	/*
 	* 导出excel和查询公用方法
 	**/
-	private void selfSet(HttpServletRequest request, CriteriaQuery cq) {
-		String type = request.getParameter("type");
-		if(StringUtil.isNotEmpty(type)) {
-            if("xianyou".equals(type)) {
-                cq.notEq("status", "3");
-            } else if("daoqi".equals(type)) {
-                cq.eq("status", "2");
-            } else if("huizong".equals(type)) {
-                cq.eq("status", "1");
-            }
-        }
-
-        // 月报表特殊处理
-		String key = request.getParameter("key");
-		String takeinTime = request.getParameter("takeinTime2");
-		if("yue".equals(key) && StringUtil.isNotEmpty(takeinTime)) {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			try {
-				Date parse = format.parse(takeinTime+"-01");
-				Calendar curMon = Calendar.getInstance();
-				curMon.setTime(parse);
-				Calendar nextMon = (Calendar) curMon.clone();
-				nextMon.add(Calendar.MONTH, 1);
-				cq.ge("takeinTime", curMon.getTime());
-				cq.lt("takeinTime", nextMon.getTime());
-			} catch (ParseException e) {
-				e.printStackTrace();
+	private CriteriaQuery queryAndExport(ZTakeinEntity zTakein, HttpServletRequest request, DataGrid dataGrid) {
+		CriteriaQuery cq = new CriteriaQuery(ZTakeinEntity.class, dataGrid);
+		//查询条件组装器
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zTakein, request.getParameterMap());
+		try{
+			//自定义追加查询条件
+			String type = request.getParameter("type");
+			if(StringUtil.isNotEmpty(type)) {
+				if("xianyou".equals(type)) {
+					cq.notEq("status", "3");
+				} else if("daoqi".equals(type)) {
+					cq.eq("status", "2");
+				} else if("huizong".equals(type)) {
+					cq.eq("status", "1");
+				}
 			}
-		}
 
-		// 现金利息处理
-		String key2 = request.getParameter("key2");
-		if("xianjin".equals(key2)) {
-			cq.or(Restrictions.like("comment", "%现金%"), Restrictions.like("bankAccount", "%现金%"));
+			// 月报表特殊处理
+			String key = request.getParameter("key");
+			String takeinTime = request.getParameter("takeinTime2");
+			if("yue".equals(key) && StringUtil.isNotEmpty(takeinTime)) {
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				try {
+					Date parse = format.parse(takeinTime+"-01");
+					Calendar curMon = Calendar.getInstance();
+					curMon.setTime(parse);
+					Calendar nextMon = (Calendar) curMon.clone();
+					nextMon.add(Calendar.MONTH, 1);
+					cq.ge("takeinTime", curMon.getTime());
+					cq.lt("takeinTime", nextMon.getTime());
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+
+			// 现金利息处理
+			String key2 = request.getParameter("key2");
+			if("xianjin".equals(key2)) {
+				cq.or(Restrictions.like("comment", "%现金%"), Restrictions.like("bankAccount", "%现金%"));
+			}
+		}catch (Exception e) {
+			throw new BusinessException(e.getMessage());
 		}
+		cq.add();
+		return cq;
 	}
 
 	/**
@@ -325,10 +332,9 @@ public class ZTakeinController extends BaseController {
 	@RequestMapping(params = "exportXls")
 	public String exportXls(ZTakeinEntity zTakein,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-		CriteriaQuery cq = new CriteriaQuery(ZTakeinEntity.class, dataGrid);
-		selfSet(request, cq);
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, zTakein, request.getParameterMap());
+		CriteriaQuery cq = queryAndExport(zTakein, request, dataGrid);
 		List<ZTakeinEntity> zTakeins = this.zTakeinService.getListByCriteriaQuery(cq,false);
+		Map<String, Map<String, Object>> map = processResult(zTakeins);
 
 		List list = zTakeins;
         String fileName = "客户信息汇总";
@@ -367,6 +373,10 @@ public class ZTakeinController extends BaseController {
 				try {
 					t = constructor.newInstance();
 					BeanUtils.copyProperties(z, t, exportType);
+					if("huizong".equals(type)) {
+						ZTakeinEntity_Huizong hz = (ZTakeinEntity_Huizong) t;
+						hz.setCount(map.get(z.getId()).get("count").toString());
+					}
 					list.add(t);
 				} catch (Exception e) {
 					e.printStackTrace();
