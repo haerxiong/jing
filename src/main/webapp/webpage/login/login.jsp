@@ -33,7 +33,7 @@
   <![endif]-->
   <style>
     body {
-      background-image: url(./banner.jpg) !important;
+      background-image: url('<c:url value="/banner.jpg"/>') !important;
       background-size: 100% 100% !important;
       -moz-background-size: 100% 100% !important;
       -webkit-background-size: auto 100% !important;
