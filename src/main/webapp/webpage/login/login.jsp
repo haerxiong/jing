@@ -55,7 +55,7 @@
       <div class="col-sm-10 col-sm-offset-1">
         <div class="login-container">
           <div class="center">
-            <img src="/baohua.png" style="margin: 100px auto 50px auto"/>
+            <img src='<c:url value="/baohua.png"/>' style="margin: 100px auto 50px auto"/>
             <h1 id="id-text2" class="grey">
               <i class="ace-icon fa fa- green"></i>
               财务合同系统&nbsp
