@@ -31,6 +31,14 @@
   <!--[if lte IE 9]>
   <link rel="stylesheet" href="plug-in/ace/css/ace-ie.css" />
   <![endif]-->
+  <style>
+    body {
+      background-image: url(/banner.jpg) !important;
+      background-size: 100% 100% !important;
+      -moz-background-size: 100% 100% !important;
+      -webkit-background-size: auto 100% !important;
+    }
+  </style>
   <!-- ace settings handler -->
   <script src="plug-in/ace/js/ace-extra.js"></script>
 
@@ -47,11 +55,12 @@
       <div class="col-sm-10 col-sm-offset-1">
         <div class="login-container">
           <div class="center">
+            <img src="/baohua.png" style="margin: 100px auto 50px auto"/>
             <h1 id="id-text2" class="grey">
-              <i class="ace-icon fa fa-leaf green"></i>
-               JEECG 演示系统
+              <i class="ace-icon fa fa- green"></i>
+              财务合同系统&nbsp
             </h1>
-            <h4 class="blue" id="id-company-text">www.jeecg.org</h4>
+            <%--<h4 class="blue" id="id-company-text">www.jeecg.org</h4>--%>
           </div>
           <div class="space-6"></div>
           <div class="position-relative">
@@ -99,8 +108,8 @@
                         --%><button type="button" id="but_login"  onclick="checkUser()" class="width-35 pull-right btn btn-sm btn-primary">
                           <i class="ace-icon fa fa-key"></i>
                           <span class="bigger-110" >登录</span>
-                        </button>
-                        <a href="loginController.do?goResetPwdMail" class="btn btn-link">忘记密码 ?</a>
+                        </button><%--
+                        <a href="loginController.do?goResetPwdMail" class="btn btn-link">忘记密码 ?</a>--%>
                       </div>
                       <div class="space-4"></div>
 
@@ -117,8 +126,8 @@
                 </form>
               </div>
             </div>
-            <div class="center"><h4 class="blue" id="id-company-text">&copy; JEECG版权所有 v_3.8</h4></div>
-            <div class="navbar-fixed-top align-right">
+            <div class="center"><h4 class="blue" id="id-company-text">&copy; 宝华睿鑫版权所有 v_1.0</h4></div>
+            <div class="navbar-fixed-top align-right" style="display: none">
               <br />
               &nbsp;
               <a id="btn-login-dark" class="blue" href="#" onclick="darkStyle()">Dark</a>

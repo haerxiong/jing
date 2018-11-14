@@ -37,9 +37,9 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header" style="padding:0;">
                     <div class="dropdown profile-element">
-                                <span><img style="display: none" alt="image" width="180" height="61" src="plug-in/login/images/jeecg-aceplus.png" /></span>
+                                <span><img style="padding: 10px" alt="image" width="180" height="61" src="/baohua.png"/></span>
                     </div>
-                    <div class="logo-element">JEECG
+                    <div class="logo-element">宝华睿鑫
                     </div>
                 </li>
 
@@ -56,7 +56,7 @@
                 <div class="navbar-header" style="height: 60px;"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
                     <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
                         <div class="form-group">
-                            <input type="text" placeholder="欢迎使用Jeecg快速开发平台 …" class="form-control" name="top-search" id="top-search">
+                            <input type="text" placeholder="宝华睿鑫-财务合同系统" class="form-control" name="top-search" id="top-search">
                         </div>
                     </form>
                 </div>
