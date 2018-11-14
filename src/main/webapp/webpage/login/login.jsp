@@ -114,7 +114,7 @@
                       <div class="space-4"></div>
 
                 </div>
-                <div class="toolbar clearfix">
+                <div class="toolbar clearfix" style="display:none">
                   <div style="float: right">
                     <a href="#"  class="forgot-password-link">
                     	  语言
