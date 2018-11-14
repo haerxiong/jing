@@ -19,6 +19,7 @@
    <t:dgCol title="汇款账号"  field="bankAccount"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="电话"  field="phone"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="金额"  field="amount"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="利率"  field="rate"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="投资时间"  field="createDate" formatter="yyyy-MM-dd" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="150"></t:dgCol>

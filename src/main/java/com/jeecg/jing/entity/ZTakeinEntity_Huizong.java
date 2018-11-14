@@ -30,10 +30,20 @@ public class ZTakeinEntity_Huizong implements java.io.Serializable {
 	private String phone;
 	@Excel(name="备注",width=15)
 	private String comment;
+	@Excel(name="金额",width=15)
+	private java.math.BigDecimal amount;
 	@Excel(name="利率",width=15)
 	private BigDecimal rate;
 	@Excel(name="投资时间",width=15,format = "yyyy/MM/dd")
 	private Date investTime;
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
 
 	public String getCount() {
 		return count;
