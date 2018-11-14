@@ -37,7 +37,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header" style="padding:0;">
                     <div class="dropdown profile-element">
-                                <span><img style="padding: 10px" alt="image" width="180" height="61" src="/baohua.png"/></span>
+                                <span><img style="padding: 10px" alt="image" width="180" height="61" src="./baohua.png"/></span>
                     </div>
                     <div class="logo-element">宝华睿鑫
                     </div>
