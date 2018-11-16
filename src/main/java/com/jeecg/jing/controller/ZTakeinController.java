@@ -329,7 +329,9 @@ public class ZTakeinController extends BaseController {
 			zTakein = zTakeinService.getEntity(ZTakeinEntity.class, zTakein.getId());
 			req.setAttribute("zTakein", zTakein);
 		}
-		return new ModelAndView("com/jeecg/jing/zTakein-update");
+		ModelAndView mv = new ModelAndView("com/jeecg/jing/zTakein-update");
+		mv.addObject("key", req.getParameter("key"));
+		return mv;
 	}
 
 	/**
@@ -382,7 +384,11 @@ public class ZTakeinController extends BaseController {
                     String takeinTime = request.getParameter("takeinTime2");
                     fileName = takeinTime + "客户单月流水汇总";
                     title = fileName + "列表";
-                }
+                } else if("hongbao".equals(key)) {
+					exportType = ZTakeinEntity_hongbao.class;
+					fileName = "客户签单活动";
+					title = fileName + "列表";
+				}
 
 			} else if("daoqi".equals(type)) {
 				exportType = ZTakeinEntity_Daoqi.class;

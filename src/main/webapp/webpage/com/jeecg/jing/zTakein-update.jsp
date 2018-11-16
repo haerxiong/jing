@@ -148,6 +148,16 @@
 						</div>
 					</div>
 				</div>
+				<div class="bt-item col-md-6 col-sm-6" style="display: ${'hongbao' eq key ? '' : 'none'}">
+					<div class="row">
+						<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
+							红包金额：
+						</div>
+						<div class="col-md-9 col-sm-9 col-xs-9 bt-content">
+							<input name="redAmount" type="text" class="form-control" maxlength="256" value = "${zTakein.redAmount}"  ignore="ignore"  />
+						</div>
+					</div>
+				</div>
 				<div class="bt-item col-md-6 col-sm-6" style="display: none">
 					<div class="row">
 						<div class="col-md-3 col-sm-3 col-xs-3 bt-label">

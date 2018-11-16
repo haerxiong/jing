@@ -81,6 +81,8 @@ public class ZTakeinEntity implements java.io.Serializable {
 	private java.util.Date outTime;
 	/**投资时间*/
 	private java.util.Date investTime;
+	/**红包金额*/
+	private java.math.BigDecimal redAmount;
 	/**备注*/
 	@Excel(name="备注",width=15)
 	private java.lang.String comment;
@@ -97,6 +99,15 @@ public class ZTakeinEntity implements java.io.Serializable {
 	private java.lang.String sysOrgCode;
 	/**所属公司*/
 	private java.lang.String sysCompanyCode;
+
+	@Column(name ="red_amount",nullable=true,length=32)
+	public BigDecimal getRedAmount() {
+		return redAmount;
+	}
+
+	public void setRedAmount(BigDecimal redAmount) {
+		this.redAmount = redAmount;
+	}
 
 	/**
 	 *方法: 取得java.lang.String

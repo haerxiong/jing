@@ -28,6 +28,8 @@ INSERT INTO `t_s_type` VALUES ('402881c8670b275e01670b8f716d0008', '6', '0.5', N
 INSERT INTO `t_s_type` VALUES ('402881c8670b275e01670b8e9df90006', '3', '0.25', NULL, '402881c8670b275e01670b8e057f0002', '2018-11-13 13:32:35', '管理员', 2);
 INSERT INTO `t_s_type` VALUES ('402881c8670b275e01670b8e4d3b0004', '活期', '0.08', NULL, '402881c8670b275e01670b8e057f0002', '2018-11-13 13:32:14', '管理员', 1);
 
+update t_s_muti_lang set lang_context = '宝华睿鑫' where lang_key = 'jeect.platform';
+
 CREATE TABLE `z_takein` (
   `id` varchar(36) NOT NULL,
   `create_name` varchar(50) DEFAULT NULL COMMENT '创建人名称',
@@ -55,7 +57,9 @@ CREATE TABLE `z_takein` (
   `invest_time` datetime DEFAULT NULL COMMENT '投资时间',
   `sys_org_code` varchar(50) DEFAULT NULL COMMENT '所属部门',
   `sys_company_code` varchar(50) DEFAULT NULL COMMENT '所属公司',
-  PRIMARY KEY (`id`)
+  `red_amount` double DEFAULT NULL COMMENT '红包金额',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uni_contract` (`contract`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `z_saleman` (
