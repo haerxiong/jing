@@ -334,6 +334,17 @@ public class ZTakeinController extends BaseController {
 		return mv;
 	}
 
+	@RequestMapping(params = "goPrint")
+	public ModelAndView goPrint(ZTakeinEntity zTakein, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(zTakein.getId())) {
+			zTakein = zTakeinService.getEntity(ZTakeinEntity.class, zTakein.getId());
+			req.setAttribute("zTakein", zTakein);
+		}
+		ModelAndView mv = new ModelAndView("com/jeecg/jing/zTakein-print");
+		mv.addObject("now", new Date());
+		return mv;
+	}
+
 	/**
 	 * 导入功能跳转
 	 *

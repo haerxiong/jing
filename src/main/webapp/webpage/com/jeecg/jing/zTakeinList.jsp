@@ -67,6 +67,10 @@
      createwindow('修改', 'zTakeinController.do?goUpdate&id='+id+'&key=${key}', 768, null);
  }
 
+ function goPrint(id) {
+     createwindow('修改', 'zTakeinController.do?goUpdate&id='+id+'&key=${key}', 768, null);
+ }
+
 //导入
 function ImportXls() {
 	openuploadwin('Excel导入', 'zTakeinController.do?upload', "zTakeinList");

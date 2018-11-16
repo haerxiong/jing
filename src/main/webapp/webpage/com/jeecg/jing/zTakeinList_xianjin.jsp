@@ -23,6 +23,7 @@
    <t:dgCol title="操作" field="opt" width="150"></t:dgCol>
    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
    <t:dgFunOpt funname="goud2(id)" title="修改"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
+   <t:dgFunOpt funname="goPrint(id)" title="打印凭证"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
    <%--<t:dgDelOpt title="删除" url="zTakeinController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="编辑" icon="icon-edit" url="zTakeinController.do?goUpdate" funname="update"  width="800" height="500"></t:dgToolBar>
    <t:dgToolBar title="批量删除"  icon="icon-remove" url="zTakeinController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
@@ -36,6 +37,10 @@
 
  function goud2(id) {
      createwindow('修改', 'zTakeinController.do?goUpdate&id='+id , 768, null);
+ }
+
+ function goPrint(id) {
+     createwindow('打印凭证', 'zTakeinController.do?goPrint&id='+id, 768, null);
  }
  
 //导入

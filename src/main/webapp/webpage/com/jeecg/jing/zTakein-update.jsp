@@ -217,7 +217,7 @@
             btnSubmit : "#btn_sub",
             btnReset : "#btn_reset",
             ajaxPost : true,
-            beforeSubmit : function(curform) {
+            beforeSubmit : function(curform) {alert();
             },
             usePlugin : {
                 passwordstrength : {
