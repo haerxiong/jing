@@ -17,7 +17,9 @@
    <t:dgCol title="合计(万)"  field="sum_amount"  queryMode="single"  width="120" align="right"></t:dgCol>
    <t:dgCol title="业绩年化"  field="sum_year"  queryMode="single"  width="120" align="right"></t:dgCol>
    <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="编辑信息" field="opt" width="400"></t:dgCol>
+   <t:dgCol title="到期时间"  field="endTime" query="true" formatter="yyyy-MM-dd" hidden="true" queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="到期日"  field="endTime2" query="true" formatterjs="getEnd" queryMode="single"  width="80" align="right"></t:dgCol>
+   <t:dgCol title="编辑信息" field="opt"></t:dgCol>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="zSaleController.do?goAdd" funname="add"  width="768"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="zSaleController.do?goUpdate" funname="update"  width="768"></t:dgToolBar>--%>
    <%--<t:dgFunOpt funname="goud(id)" title="销售明细"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>--%>
@@ -35,6 +37,10 @@
  <script type="text/javascript">
  $(document).ready(function(){
  });
+
+ function getEnd(value,row,index) {
+     return row["endTime"].substring(8, 10);
+ }
  
  function loadData(data) {
      combine_single(data, ["saleName"], ["sum_amount", "sum_year"]);

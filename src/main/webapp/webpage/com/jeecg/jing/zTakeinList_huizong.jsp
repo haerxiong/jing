@@ -22,7 +22,9 @@
    <t:dgCol title="金额"  field="amount"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="利率"  field="rate"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="投资时间"  field="createDate" formatter="yyyy-MM-dd" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="操作" field="opt" width="150"></t:dgCol>
+   <t:dgCol title="到期时间"  field="endTime" query="true" formatter="yyyy-MM-dd" hidden="true" queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="到期日"  field="endTime2" query="true" formatterjs="getEnd" queryMode="single"  width="80" align="right"></t:dgCol>
+   <t:dgCol title="操作" field="opt"></t:dgCol>
    <t:dgFunOpt funname="goud2(id)" title="修改"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
    <t:dgConfOpt url="zTakeinController.do?doUpdate&id={id}&status=2" title="出金" message="确定出金吗？"></t:dgConfOpt>
    <%--<t:dgDelOpt title="删除" url="zTakeinController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
@@ -39,6 +41,10 @@
  <script type="text/javascript">
  $(document).ready(function(){
  });
+
+ function getEnd(value,row,index) {
+     return row["endTime"].substring(8, 10);
+ }
 
  function loadData(data) {
      combine_single(data, ["saleName"], ["count"]);

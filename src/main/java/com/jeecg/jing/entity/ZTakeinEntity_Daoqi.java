@@ -43,6 +43,18 @@ public class ZTakeinEntity_Daoqi implements java.io.Serializable {
 	@Excel(name="出金时间",width=15,format = "yyyy/MM/dd")
 	private java.util.Date outTime;
 
+	// 到期日，即到期时间的Day字段
+	@Excel(name="到期日",width=15)
+	private java.lang.String endDay;
+
+	public String getEndDay() {
+		return endDay;
+	}
+
+	public void setEndDay(String endDay) {
+		this.endDay = endDay;
+	}
+
 	public String getContract() {
 		return contract;
 	}

@@ -6,7 +6,7 @@
   <t:datagrid name="zTakeinList" checkbox="false" pagination="true" fitColumns="true" title="客户信息" onLoadSuccess="ok"
     actionUrl="zTakeinController.do?datagrid&key=${key}&type=${type}&key2=${key2}" idField="id" sortName="createDate" fit="true" queryMode="group">
     <c:if test="${'yue' eq key}">
-     <t:dgCol title="<b id=\"head\"></b>" colspan="12" newColumn="true"></t:dgCol>
+     <t:dgCol title="<b id=\"head\"></b>" colspan="13" newColumn="true"></t:dgCol>
     </c:if>
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -32,7 +32,8 @@
    <t:dgCol title="到期时间"  field="endTime" query="true" formatter="yyyy-MM-dd" hidden="${('huizong' eq type)?true:false}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="出金时间"  field="outTime" formatter="yyyy-MM-dd" hidden="${('daoqi' eq type)?false:true}" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="操作" field="opt" width="150"></t:dgCol>
+   <t:dgCol title="到期日"  field="endTime2" query="true" formatterjs="getEnd" queryMode="single"  width="80" align="right"></t:dgCol>
+   <t:dgCol title="操作" field="opt"></t:dgCol>
    <t:dgFunOpt funname="goud2(id)" title="修改"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
    <c:if test="${'daoqi' eq type}">
     <t:dgConfOpt url="zTakeinController.do?doUpdate&id={id}&status=3" title="归档" message="确定归档吗？"></t:dgConfOpt>
@@ -55,6 +56,10 @@
  $(document).ready(function(){
      $("[name='takeinTime2']").prev().css('width', 120);
  });
+
+ function getEnd(value,row,index) {
+    return row["endTime"].substring(8, 10);
+ }
 
  function ok() {
      var head = $("[name='takeinTime2']").val();

@@ -38,6 +38,18 @@ public class ZTakeinEntity_sale implements java.io.Serializable {
 	@Excel(name="备注",width=15)
 	private String comment;
 
+	// 到期日，即到期时间的Day字段
+	@Excel(name="到期日",width=15)
+	private java.lang.String endDay;
+
+	public String getEndDay() {
+		return endDay;
+	}
+
+	public void setEndDay(String endDay) {
+		this.endDay = endDay;
+	}
+
 	public String getTeamName() {
 		return teamName;
 	}

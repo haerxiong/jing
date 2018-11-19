@@ -1,6 +1,7 @@
 package com.jeecg.jing.entity;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.lang.String;
 import java.lang.Double;
@@ -99,6 +100,25 @@ public class ZTakeinEntity implements java.io.Serializable {
 	private java.lang.String sysOrgCode;
 	/**所属公司*/
 	private java.lang.String sysCompanyCode;
+
+	// 到期日，即到期时间的Day字段
+	@Excel(name="到期日",width=15)
+	@Transient
+	private java.lang.String endDay;
+
+	@Transient
+	public String getEndDay() {
+		if(endTime != null) {
+			Calendar c = Calendar.getInstance();
+			c.setTime(endTime);
+			endDay = c.get(Calendar.DAY_OF_MONTH) + "";
+		}
+		return endDay;
+	}
+
+	public void setEndDay(String endDay) {
+		this.endDay = endDay;
+	}
 
 	@Column(name ="red_amount",nullable=true,length=32)
 	public BigDecimal getRedAmount() {
@@ -518,6 +538,11 @@ public class ZTakeinEntity implements java.io.Serializable {
 	 *@param: java.util.Date  到期时间
 	 */
 	public void setEndTime(java.util.Date endTime){
+		if(endTime != null) {
+			Calendar c = Calendar.getInstance();
+			c.setTime(endTime);
+			endDay = c.get(Calendar.DAY_OF_MONTH) + "";
+		}
 		this.endTime = endTime;
 	}
 	/**

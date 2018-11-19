@@ -37,6 +37,18 @@ public class ZTakeinEntity_Huizong implements java.io.Serializable {
 	@Excel(name="投资时间",width=15,format = "yyyy/MM/dd")
 	private Date investTime;
 
+	// 到期日，即到期时间的Day字段
+	@Excel(name="到期日",width=15)
+	private java.lang.String endDay;
+
+	public String getEndDay() {
+		return endDay;
+	}
+
+	public void setEndDay(String endDay) {
+		this.endDay = endDay;
+	}
+
 	public BigDecimal getAmount() {
 		return amount;
 	}
