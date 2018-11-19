@@ -11,9 +11,6 @@
 	<t:base type="bootstrap,bootstrap-table,layer,validform,bootstrap-form"></t:base>
 	<style>
 		@media print {
-			.inner,.inner>tr,.inner>tr>td {
-				border:none;
-			}
 		}
 	</style>
 </head>
@@ -42,13 +39,13 @@
 			</tr>
 			<tr>
 				<td colspan="4">
-					<table style="width: 100%" class="inner">
-						<tr>
-							<td><span>入金时间:<fmt:formatDate pattern='yyyy-MM-dd' type='date' value='${zTakein.takeinTime}'/></span></td>
-							<td style="text-align: center;"><span>电话：${zTakein.phone}</span></td>
-							<td style="text-align: right"><span>到期时间：<fmt:formatDate pattern='yyyy-MM-dd' type='date' value='${zTakein.endTime}'/></span></td>
-						</tr>
-					</table>
+					<div style="width: 100%">
+                        <div style="float:left;">入金时间:<fmt:formatDate pattern='yyyy-MM-dd' type='date' value='${zTakein.takeinTime}'/></div>
+                        <div style="float:left;width: 50%;margin:auto;text-align: center;">电话：${zTakein.phone}</div>
+                        <div style="float:left;text-align: right">
+                            到期时间：<fmt:formatDate pattern='yyyy-MM-dd' type='date' value='${zTakein.endTime}'/>
+                        </div>
+					</div>
 				</td>
 			</tr>
 			<tr>
