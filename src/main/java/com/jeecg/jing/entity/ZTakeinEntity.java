@@ -108,11 +108,6 @@ public class ZTakeinEntity implements java.io.Serializable {
 
 	@Transient
 	public String getEndDay() {
-		if(endTime != null) {
-			Calendar c = Calendar.getInstance();
-			c.setTime(endTime);
-			endDay = c.get(Calendar.DAY_OF_MONTH) + "";
-		}
 		return endDay;
 	}
 
@@ -538,11 +533,6 @@ public class ZTakeinEntity implements java.io.Serializable {
 	 *@param: java.util.Date  到期时间
 	 */
 	public void setEndTime(java.util.Date endTime){
-		if(endTime != null) {
-			Calendar c = Calendar.getInstance();
-			c.setTime(endTime);
-			endDay = c.get(Calendar.DAY_OF_MONTH) + "";
-		}
 		this.endTime = endTime;
 	}
 	/**

@@ -285,6 +285,11 @@ public class ZTakeinWayController extends BaseController {
 			BeanUtils.copyProperties(e, t, t.getClass());
 			t.setSignTime(e.getCreateDate());
 			t.setPayType(e.getzTakeinWayEntity() == null ? "" : e.getzTakeinWayEntity().getPayType());
+			if(e.getEndTime() != null) {
+				Calendar c = Calendar.getInstance();
+				c.setTime(e.getEndTime());
+				t.setEndDay(c.get(Calendar.DAY_OF_MONTH) + "");
+			}
 			list.add(t);
 		}
 		modelMap.put(NormalExcelConstants.FILE_NAME,"客户资金日报表");

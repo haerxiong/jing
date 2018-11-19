@@ -8,8 +8,7 @@ import com.jeecg.jing.service.ZSaleServiceI;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,8 +45,6 @@ import org.jeecgframework.core.util.ResourceUtil;
 import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import java.util.Map;
-import java.util.HashMap;
 import org.jeecgframework.core.util.ExceptionUtil;
 
 import org.springframework.stereotype.Controller;
@@ -405,6 +402,7 @@ public class ZSaleController extends BaseController {
 		List<Object> list = new ArrayList<Object>();
 		for(ZTakeinEntity e : zTakeins) {
 			Map<String, Object> item = map.get(e.getId());
+
 			if("ticheng".equals(type)) {
 				ZTakeinEntity_ticheng t = new ZTakeinEntity_ticheng();
 				BeanUtils.copyProperties(e, t, ZTakeinEntity_ticheng.class);
@@ -414,6 +412,11 @@ public class ZSaleController extends BaseController {
 				t.setPercentages(item.get("percentages").toString());
 				t.setTeamName(e.getzSalemanEntity().getTeamName());
 				t.setJoinTime(e.getzSalemanEntity().getJoinTime());
+				if(e.getEndTime() != null) {
+					Calendar c = Calendar.getInstance();
+					c.setTime(e.getEndTime());
+					t.setEndDay(c.get(Calendar.DAY_OF_MONTH) + "");
+				}
 				list.add(t);
 			} else {
 				ZTakeinEntity_sale t = new ZTakeinEntity_sale();
@@ -424,6 +427,11 @@ public class ZSaleController extends BaseController {
 				t.setSignTime(e.getCreateDate());
 				t.setTeamName(e.getzSalemanEntity().getTeamName());
 				t.setJoinTime(e.getzSalemanEntity().getJoinTime());
+				if(e.getEndTime() != null) {
+					Calendar c = Calendar.getInstance();
+					c.setTime(e.getEndTime());
+					t.setEndDay(c.get(Calendar.DAY_OF_MONTH) + "");
+				}
 				list.add(t);
 			}
 		}

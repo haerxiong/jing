@@ -49,6 +49,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import static oracle.net.aso.C11.t;
+
 /**
  * @Title: Controller
  * @Description: 客户信息
@@ -423,7 +425,26 @@ public class ZTakeinController extends BaseController {
 						ZTakeinEntity_Xianjin xj = (ZTakeinEntity_Xianjin) t;
 						xj.setInterest(map.get(z.getId()).get("interest").toString());
 					}
+					if(z.getEndTime() != null) {
+						Calendar c = Calendar.getInstance();
+						c.setTime(z.getEndTime());
+						t.getClass().getMethod("setEndDay", String.class).invoke(t, c.get(Calendar.DAY_OF_MONTH) + "");
+					}
 					list.add(t);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			for (int i = 0; i < list.size(); i++) {
+				try {
+					ZTakeinEntity z = (ZTakeinEntity) list.get(i);
+					Date endTime = z.getEndTime();
+					if(endTime != null) {
+						Calendar c = Calendar.getInstance();
+						c.setTime(endTime);
+						z.setEndDay(c.get(Calendar.DAY_OF_MONTH) + "");
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
