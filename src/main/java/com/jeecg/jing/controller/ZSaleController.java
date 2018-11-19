@@ -400,11 +400,10 @@ public class ZSaleController extends BaseController {
 		CriteriaQuery cq = queryAndExport(request, dataGrid);
 		List<ZTakeinEntity> zTakeins = zSaleService.getListByCriteriaQuery(cq, false);
 		Map<String, Map<String, Object>> map = processResult(zTakeins);
-		List<ZTakeinEntity> rs = dataGrid.getResults();
 
 		String type = request.getParameter("type");
 		List<Object> list = new ArrayList<Object>();
-		for(ZTakeinEntity e : rs) {
+		for(ZTakeinEntity e : zTakeins) {
 			Map<String, Object> item = map.get(e.getId());
 			if("ticheng".equals(type)) {
 				ZTakeinEntity_ticheng t = new ZTakeinEntity_ticheng();
