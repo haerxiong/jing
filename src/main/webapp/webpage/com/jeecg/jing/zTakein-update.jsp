@@ -84,7 +84,7 @@
 							金额：
 						</div>
 						<div class="col-md-9 col-sm-9 col-xs-9 bt-content">
-							<input name="amount" type="text" class="form-control" maxlength="32" value = "${zTakein.amount}"  ignore="ignore"  />
+							<input name="amount" type="text" class="form-control" datatype="n" maxlength="32" value = "${zTakein.amount}"  ignore="ignore"  />
 						</div>
 					</div>
 				</div>
@@ -104,7 +104,7 @@
 							利率：
 						</div>
 						<div class="col-md-9 col-sm-9 col-xs-9 bt-content">
-							<input name="rate" type="text" class="form-control" maxlength="32" value = "${zTakein.rate}"  ignore="ignore"  />
+							<input name="rate" type="text" class="form-control" datatype="n" maxlength="32" value = "${zTakein.rate}"  ignore="ignore"  />
 						</div>
 					</div>
 				</div>
@@ -164,7 +164,7 @@
 							状态：
 						</div>
 						<div class="col-md-9 col-sm-9 col-xs-9 bt-content">
-							<input name="status" type="text" class="form-control" maxlength="32" value = "${zTakein.status}"  ignore="ignore"  />
+							<input name="status" type="text" class="form-control" datatype="n" maxlength="32" value = "${zTakein.status}"  ignore="ignore"  />
 						</div>
 					</div>
 				</div>
@@ -217,7 +217,7 @@
             btnSubmit : "#btn_sub",
             btnReset : "#btn_reset",
             ajaxPost : true,
-            beforeSubmit : function(curform) {alert();
+            beforeSubmit : function(curform) {
             },
             usePlugin : {
                 passwordstrength : {

@@ -84,7 +84,7 @@
 							金额：
 						</div>
 						<div class="col-md-9 col-sm-9 col-xs-9 bt-content">
-							<input name="amount" type="text" class="form-control input-sm" maxlength="32"  ignore="ignore"  />
+							<input name="amount" type="text" class="form-control input-sm" datatype="n" maxlength="32"  ignore="ignore"  />
 						</div>
 					</div>
 				</div>
@@ -104,7 +104,7 @@
 							利率：
 						</div>
 						<div class="col-md-9 col-sm-9 col-xs-9 bt-content">
-							<input name="rate" type="text" class="form-control input-sm" maxlength="32"  ignore="ignore"  />
+							<input name="rate" type="text" class="form-control input-sm" datatype="n" maxlength="32"  ignore="ignore"  />
 						</div>
 					</div>
 				</div>

@@ -143,11 +143,11 @@ $(function () {
         // 选项卡菜单不存在
         if (flag) {
 
-        	if($(".J_iframe").length>10){
+        	if($(".J_iframe").length>11){
         		layer.open({
         			   title: ['提示信息', 'font-size:16px;']
         			  ,type: 1
-        			  ,content: '<div style="padding: 20px 1px 20px 60px;border-bottom:1px solid #ddd"><i style="position: absolute;top: 16px;left: 15px; width: 30px;height: 30px;" class="layui-layer-ico layui-layer-ico0"></i>请先关闭一些选项卡(最多允许打开10个)！</div>'
+        			  ,content: '<div style="padding: 20px 1px 20px 60px;border-bottom:1px solid #ddd"><i style="position: absolute;top: 16px;left: 15px; width: 30px;height: 30px;" class="layui-layer-ico layui-layer-ico0"></i>请先关闭一些选项卡(最多允许打开11个)！</div>'
         			  ,btn: '确 定'
         			  ,icon:1
         			  ,btnAlign: 'c'
