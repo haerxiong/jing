@@ -56,6 +56,9 @@
 				<span style="float:right;text-decoration: underline">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 				<span style="float:right">客户签字：</span>
 			</caption>
+			<caption>
+				<img src='<c:url value="/zhang.gif"/>' style="float: right;width: 150px"/>
+			</caption>
 		</table>
 
 	</div>
@@ -83,7 +86,10 @@
         $("#formobj").Validform({
             btnSubmit : "#btn_sub",
             beforeSubmit : function(curform) {
-            	doPrint();
+                var t = $(parent.document).find(".ui_buttons>input:nth-child(2)").parents("div");
+                $(t[t.length-1]).hide();
+                $(parent.document).find("#ldg_lockmask").hide();
+                doPrint();
             }
         });
         $("#Validform_msg").hide();
