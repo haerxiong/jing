@@ -18,7 +18,7 @@
    <t:dgCol title="团队合计(万)"  field="sum_amount_team"  queryMode="single"  width="120" align="right"></t:dgCol>
    <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="到期时间"  field="endTime" query="true" formatter="yyyy-MM-dd" hidden="true" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="到期日"  field="endTime2" query="true" formatterjs="getEnd" queryMode="single"  width="80" align="right"></t:dgCol>
+   <t:dgCol title="到期日"  field="endTime2" formatterjs="getEnd" queryMode="single"  width="80" align="right"></t:dgCol>
    <t:dgCol title="编辑信息" field="opt"></t:dgCol>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="zSaleController.do?goAdd" funname="add"  width="768"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="zSaleController.do?goUpdate" funname="update"  width="768"></t:dgToolBar>--%>

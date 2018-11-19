@@ -20,7 +20,7 @@
    <t:dgCol title="合计金额(元)"  field="interest"  queryMode="single"  width="120" align="right"></t:dgCol>
    <t:dgCol title="客户签字"  field="ext2"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="到期日"  field="endTime2" query="true" formatterjs="getEnd" queryMode="single"  width="80" align="right"></t:dgCol>
+   <t:dgCol title="到期日"  field="endTime2" formatterjs="getEnd" queryMode="single"  width="80" align="right"></t:dgCol>
    <t:dgCol title="操作" field="opt"></t:dgCol>
    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
    <t:dgFunOpt funname="goud2(id)" title="修改"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>

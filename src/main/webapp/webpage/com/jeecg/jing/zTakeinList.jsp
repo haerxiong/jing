@@ -32,7 +32,7 @@
    <t:dgCol title="到期时间"  field="endTime" query="true" formatter="yyyy-MM-dd" hidden="${('huizong' eq type)?true:false}" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备注"  field="comment"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="出金时间"  field="outTime" formatter="yyyy-MM-dd" hidden="${('daoqi' eq type)?false:true}" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="到期日"  field="endTime2" query="true" formatterjs="getEnd" queryMode="single"  width="80" align="right"></t:dgCol>
+   <t:dgCol title="到期日"  field="endTime2" formatterjs="getEnd" queryMode="single"  width="80" align="right"></t:dgCol>
    <t:dgCol title="操作" field="opt"></t:dgCol>
    <t:dgFunOpt funname="goud2(id)" title="修改"  urlclass="ace_button"  urlfont="fa-edit"></t:dgFunOpt>
    <c:if test="${'daoqi' eq type}">
