@@ -65,7 +65,7 @@
 				<span style="float:right">客户签字：</span>
 			</caption>
 			<caption>
-				<img src='<c:url value="/zhang.gif"/>' style="float: right;width: 150px"/>
+				<img src='<c:url value="/zhang.gif"/>' style="position: absolute;left:230px;top:190px;width: 150px"/>
 			</caption>
 		</table>
 
